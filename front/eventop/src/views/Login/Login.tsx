@@ -28,17 +28,16 @@ export const Login = () => {
       
 
     return (
-        <section className="max-w-md lg:w-1/4 mx-auto bg-[#eee] shadow-lg rounded-lg p-8 font-poppins transition-shadow duration-300 hover:shadow-xl">
+        <section className='flex justify-center h-1/2'>
+        <form onSubmit={handleSubmit} className='flex flex-col items-center w-full h-full md:w-1/2 mx-auto'>
         <div className="mb-6 text-center">
           <h1 className="text-3xl font-bold text-gray-800">Iniciar Sesión</h1>
         </div>
-        <form onSubmit={handleSubmit} className="space-y-6 w-full">
-          <div className="flex flex-col">
+          <div>
             <label
               htmlFor="email"
               className="text-base font-medium text-gray-700"
             >
-              Correo Electrónico:
             </label>
             <input
               type="email"
@@ -47,19 +46,18 @@ export const Login = () => {
               value={userData.email}
               onChange={handleOnChange}
               onBlur={handleOnBlur}
-              placeholder="user@mail.com"
+              placeholder="correo electronico"
               className="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out shadow-sm hover:shadow-md focus:shadow-md"
             />
             {touched.email && error.email && (
               <span className="text-red-500 text-sm">{error.email}</span>
             )}
           </div>
-          <div className="flex flex-col">
+          <div>
             <label
               htmlFor="password"
               className="text-base font-medium text-gray-700"
             >
-              Contraseña:
             </label>
             <input
               type="password"
@@ -68,7 +66,7 @@ export const Login = () => {
               value={userData.password}
               onChange={handleOnChange}
               onBlur={handleOnBlur}
-              placeholder="********"
+              placeholder="contraseña"
               className="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out shadow-sm hover:shadow-md focus:shadow-md"
             />
             {touched.password && error.password && (
@@ -84,6 +82,8 @@ export const Login = () => {
             </button>
           </div>
         </form>
-      </section>
+        </section>
   )
 }
+
+export default Login
