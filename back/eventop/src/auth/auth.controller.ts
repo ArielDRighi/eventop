@@ -1,9 +1,19 @@
-import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  HttpCode,
+  HttpStatus,
+  Post,
+  UseGuards,
+  Request,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignInAuthDto } from './dto/signIn.dto';
 import { CreateUserDto } from './dto/createUser.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('auth')
+//@UseGuards(AuthGuard('jwt'))
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
@@ -18,5 +28,11 @@ export class AuthController {
   @HttpCode(HttpStatus.CREATED)
   signUp(@Body() user: CreateUserDto) {
     return this.authService.signUp(user);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Post('profile')
+  getProfile(@Request() req) {
+    return req.user;
   }
 }
