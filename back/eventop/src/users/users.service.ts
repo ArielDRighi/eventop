@@ -19,6 +19,7 @@ export class UserService {
   //   Retornar usuario por Email
   async findOneByEmail(email: string): Promise<User> {
     const user = await this.userRepository.findOne({ where: { email } });
+
     return user;
   }
 
