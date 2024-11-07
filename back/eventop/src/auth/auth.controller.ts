@@ -1,10 +1,19 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Post, Req } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  HttpCode,
+  HttpStatus,
+  Post,
+  UseGuards,
+  Request,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignInAuthDto } from './dto/signIn.dto';
 import { CreateUserDto } from './dto/createUser.dto';
-import { request } from 'express';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('auth')
+//@UseGuards(AuthGuard('jwt'))
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
@@ -21,16 +30,9 @@ export class AuthController {
     return this.authService.signUp(user);
   }
 
-   @Get('auth0/protected')
-   getAuth0Protected(@Req() req: Request){
-     console.log(JSON.stringify(request.oidc.idToken));
-    return JSON.stringify(request.oidc.user);
-    
-   }
-
+  @UseGuards(AuthGuard('jwt'))
+  @Post('profile')
+  getProfile(@Request() req) {
+    return req.user;
+  }
 }
-
-
-
-
-
