@@ -1,8 +1,8 @@
 
 export default function Home() {
   return (
-    <>
-    EVENTOP
-    </>
+    <div>
+      <h1>Hola Mundo</h1>
+    </div>
   );
 }
