@@ -3,6 +3,9 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { EventsModule } from './events/events.module';
+import { CategoriesModule } from './categories/categories.module';
+import { LocationsModule } from './locations/locations.module';
 import TypeOrmConfig from './config/data-source';
 
 @Module({
@@ -18,6 +21,9 @@ import TypeOrmConfig from './config/data-source';
     }),
     AuthModule,
     UsersModule,
+    EventsModule,
+    CategoriesModule,
+    LocationsModule,
   ],
   controllers: [],
   providers: [],
