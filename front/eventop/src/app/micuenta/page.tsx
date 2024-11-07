@@ -1,13 +1,25 @@
-import { Login } from "@/views/Login/Login";
 
+"use client"
+import React, { useState } from 'react';
+import { Login } from '@/views/Login/Login';
+import  Register  from '@/views/Register/Register';
+import { ToggleView } from '@/components/ToggleView';
 
-export function page() {
-    return (
-       <> 
-       <div>Proximamente mi cuenta....</div>
-        <Login/>
-        </>
-    )
-}
+const Page: React.FC = () => {
+    
+  const [activeView, setActiveView] = useState<string>('Login');
 
-export default page
+  const views: { [key: string]: React.ReactNode } = {
+    Login: <Login />,
+    Register: <Register />,
+  };
+
+  return (
+    <>
+      <ToggleView activeView={activeView} setActiveView={setActiveView} views={views} />
+      {views[activeView]}
+    </>
+  );
+};
+
+export default Page;
