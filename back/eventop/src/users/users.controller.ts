@@ -9,12 +9,15 @@ import {
 import { UserService } from './users.service';
 import { AuthGuard } from '@nestjs/passport';
 import { CreateUserDto } from 'src/auth/dto/createUser.dto';
+import { Roles } from 'src/decorators/roles.decorator';
+import { Role } from 'src/auth/roles.enum';
+import { RoleGuard } from 'src/auth/roles.guard';
 
 @Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
-
-  @UseGuards(AuthGuard('jwt'))
+  @Roles(Role.Admin)
+  @UseGuards(AuthGuard('jwt'), RoleGuard)
   @Get('profile')
   getProfile(@Request() req) {
     return req.user;
