@@ -1,5 +1,5 @@
-import { Category } from 'src/categories/entitie/categories.entity';
-import { Location } from 'src/locations/entitie/locations.entity';
+import { Category } from 'src/categories/entities/categories.entity';
+import { Location } from 'src/locations/entities/locations.entity';
 import {
   Column,
   Entity,

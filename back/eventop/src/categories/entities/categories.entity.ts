@@ -1,4 +1,4 @@
-import { Event } from 'src/events/entitie/events.entity';
+import { Event } from 'src/events/entities/events.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'categories' })

@@ -36,7 +36,7 @@ export default class EventController {
     return this.eventService.createEvent(createEventDto);
   }
 
-  @Delete('id')
+  @Delete(':id')
   deleteCategory(@Param('id') eventId: number) {
     return this.eventService.deleteEvent(eventId);
   }
