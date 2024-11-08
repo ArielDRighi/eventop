@@ -6,11 +6,14 @@ import {
   Post,
   UseGuards,
   Request,
+  Req,
+  Get,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignInAuthDto } from './dto/signIn.dto';
 import { CreateUserDto } from './dto/createUser.dto';
 import { AuthGuard } from '@nestjs/passport';
+import { request } from 'express';
 
 @Controller('auth')
 //@UseGuards(AuthGuard('jwt'))
@@ -28,6 +31,12 @@ export class AuthController {
   @HttpCode(HttpStatus.CREATED)
   signUp(@Body() user: CreateUserDto) {
     return this.authService.signUp(user);
+  }
+
+  @Get('auth0/protected')
+  getAuth0Protected(@Req() req: Request) {
+    console.log(JSON.stringify(request.oidc.idToken));
+    return JSON.stringify(request.oidc.user);
   }
 
   @UseGuards(AuthGuard('jwt'))
