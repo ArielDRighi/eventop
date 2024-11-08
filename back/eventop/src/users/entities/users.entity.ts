@@ -26,10 +26,10 @@ export class User {
   @Column({ type: 'enum', enum: Role, default: 'guest' })
   role: Role;
 
-  @Column({ type: 'varchar', length: 10, default: 'en' })
+  @Column({ type: 'varchar', length: 10, default: 'SPA' })
   preferredLanguage: string;
 
-  @Column({ type: 'varchar', length: 10, default: 'USD' })
+  @Column({ type: 'varchar', length: 10, default: 'ARS' })
   preferredCurrency: string;
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamp' })

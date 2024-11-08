@@ -10,7 +10,9 @@ import {
 } from '@nestjs/common';
 import { EventService } from './events.service';
 import { CreateEventDto } from './dto/CreateEvent.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+ApiTags('events');
 @Controller('events')
 export default class EventController {
   constructor(private readonly eventService: EventService) {}
