@@ -13,6 +13,7 @@ export const Navbar = () => {
                 <li className='cursor-pointer  hover:border-b-blue-500 hover:border-b'>Incio</li>
                 <li className='cursor-pointer  hover:border-b-blue-500 hover:border-b'>Econtra Eventos</li>
                 <li className='cursor-pointer  hover:border-b-blue-500 hover:border-b'>Centro de ayuda</li>
+                <a href="/api/auth/login">Login</a>
             </ul>
         </div>
         <div className='flex flex-row items-center gap-2'>
