@@ -9,6 +9,6 @@ export class Category {
   @Column({ type: 'varchar', length: 255 })
   name: string;
 
-  @OneToMany(() => Event, (event) => event.category)
-  events: Event[];
+  @OneToMany(() => Event, (event) => event.category_id)
+  events_id: Event[];
 }

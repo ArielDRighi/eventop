@@ -28,11 +28,11 @@ export class Event {
   @Column({ type: 'varchar', length: 10, default: 'USD' })
   currency: string;
 
-  @ManyToOne(() => Location, (location) => location.events)
+  @ManyToOne(() => Location, (location) => location.events_id)
   @JoinColumn({ name: 'location_id' })
-  location: Location;
+  location_id: Location;
 
-  @ManyToOne(() => Category, (category) => category.events)
+  @ManyToOne(() => Category, (category) => category.events_id)
   @JoinColumn({ name: 'category_id' })
-  category: Category;
+  category_id: Category;
 }
