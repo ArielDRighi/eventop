@@ -5,6 +5,8 @@ services:
     image: eventop  # Imagen del contenedor
     ports:
       - "3000:3000"  # Exponer el puerto 3000 del contenedor
+    env_file:
+      - .env
     environment:
     - DB_HOST=postgresdb
     - DB_PORT=5432
