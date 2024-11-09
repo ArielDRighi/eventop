@@ -24,6 +24,6 @@ export class Location {
   @Column({ type: 'decimal', precision: 11, scale: 8 })
   longitude: number;
 
-  @OneToMany(() => Event, (event) => event.location)
-  events: Event[];
+  @OneToMany(() => Event, (event) => event.location_id)
+  events_id: Event[];
 }
