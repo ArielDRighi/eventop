@@ -3,14 +3,12 @@ export interface IRegisterProps {
     name: string,
     email: string
     password: string
-    address: string
-    phone: string
+    confirmPassword: string
 }
 
 export interface IRegisterErrors {
     name?: string,
     email?: string,
     password?: string,
-    address?: string,
-    phone?: string,
+    confirmPassword?: string,
 }

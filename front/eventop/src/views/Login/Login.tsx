@@ -32,7 +32,6 @@ export const Login = () => {
       [name]: value,
     });
 
-    console.log(userData)
   };
 
   const handleOnBlur = (event: React.FocusEvent<HTMLInputElement>) => {
@@ -67,7 +66,11 @@ export const Login = () => {
     }
 
     try {
+
       const response = await login(userData);
+
+      console.log(response)
+      
       const { token, user } = response;
 
       // Almacenar token y datos de usuario en localStorage

@@ -6,8 +6,7 @@ const validateRegisterForm = (values: IRegisterProps): IRegisterErrors => {
     name: "",
     email: "",
     password: "",
-    address: "",
-    phone: "",
+    confirmPassword: "",
   };
 
   // Validación para el nombre (no vacío)
@@ -31,16 +30,11 @@ const validateRegisterForm = (values: IRegisterProps): IRegisterErrors => {
     errors.password = "Password must be at least 6 characters long.";
   }
 
-  // Validación para la dirección
-  if (!values.address.trim()) {
-    errors.address = "Address is required.";
-  }
-
-  // Validación para el teléfono
-  if (!values.phone.trim()) {
-    errors.phone = "Phone number is required.";
-  } else if (!/^\d{10,15}$/.test(values.phone)) {
-    errors.phone = "Phone number must be between 10 and 15 digits.";
+  // Validación para confirmar que las contraseñas coinciden
+  if (!values.confirmPassword.trim()) {
+    errors.confirmPassword = "Confirm password is required.";
+  } else if (values.password !== values.confirmPassword) {
+    errors.confirmPassword = "Passwords do not match.";
   }
 
   return errors;

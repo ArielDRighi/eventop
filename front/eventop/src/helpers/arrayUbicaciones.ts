@@ -1,4 +1,4 @@
-const locations = [
+export const Locations = [
     {
       locationId: 1,
       name: "Estadio Nacional",
@@ -36,5 +36,5 @@ const locations = [
     },
   ];
   
-  export default locations;
+  export default Locations;
   
