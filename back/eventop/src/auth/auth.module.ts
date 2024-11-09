@@ -15,10 +15,14 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: async (configService: ConfigService) => ({
-        secret: configService.get<string>('JWT_SECRET'),
-        signOptions: { expiresIn: '60m' },
-      }),
+      useFactory: async (configService: ConfigService) => {
+        const secret = configService.get<string>('JWT_SECRET');
+        console.log('JWT_SECRET:', secret); // Ahora la consola está fuera de la devolución
+        return {
+          secret,
+          signOptions: { expiresIn: '60m' },
+        };
+      },
     }),
   ],
   providers: [AuthService, JwtStrategy],
@@ -26,3 +30,4 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
   exports: [AuthService],
 })
 export class AuthModule {}
+
