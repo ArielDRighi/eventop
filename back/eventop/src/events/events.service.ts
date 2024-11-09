@@ -28,7 +28,8 @@ export class EventService {
   }
 
   async createEvent(createEventDto: CreateEventDto): Promise<Event> {
-    const { name, description, date, price, currency } = createEventDto;
+    const { name, description, date, price, currency, imageUrl } =
+      createEventDto;
 
     const newEvent = this.eventRepository.create({
       name,
@@ -36,6 +37,7 @@ export class EventService {
       date,
       price,
       currency,
+      imageUrl,
     });
 
     const savedEvent = await this.eventRepository.save(newEvent);

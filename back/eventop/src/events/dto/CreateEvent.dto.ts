@@ -46,4 +46,13 @@ export class CreateEventDto {
   @IsString()
   @IsNotEmpty()
   currency: string;
+
+  @ApiProperty({
+    type: String,
+    description: 'The image URL of the event',
+    required: true,
+  })
+  @IsString()
+  @IsNotEmpty()
+  imageUrl: string;
 }
