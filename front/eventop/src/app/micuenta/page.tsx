@@ -9,6 +9,8 @@ const Page: React.FC = () => {
     
   const [activeView, setActiveView] = useState<string>('Login');
 
+  
+
   const views: { [key: string]: React.ReactNode } = {
     Login: <Login />,
     Register: <Register />,
