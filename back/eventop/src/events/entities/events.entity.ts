@@ -28,6 +28,9 @@ export class Event {
   @Column({ type: 'varchar', length: 10, default: 'USD' })
   currency: string;
 
+  @Column({ type: 'text', nullable: true })
+  imageUrl: string;
+
   @ManyToOne(() => Location, (location) => location.events_id)
   @JoinColumn({ name: 'location_id' })
   location_id: Location;
