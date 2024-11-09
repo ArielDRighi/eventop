@@ -1,4 +1,4 @@
-import SideBar from "../Components/SideBar";
+import SideBar from "../../components/SideBar";
 
 const AdminPage = () => {
   return (
