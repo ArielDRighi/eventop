@@ -1,8 +1,14 @@
 
-export default function Home() {
+import React from 'react'
+import SectionOne from "./Components/SectionOne"
+
+const Home = () => {
   return (
     <div>
-      <h1>Hola Mundo</h1>
+      <SectionOne/>
     </div>
-  );
+  )
 }
+
+export default Home
+
