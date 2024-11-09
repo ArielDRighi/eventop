@@ -6,18 +6,20 @@ import {
   Post,
   UseGuards,
   Request,
+  Req,
+  Get,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignInAuthDto } from './dto/signIn.dto';
 import { CreateUserDto } from './dto/createUser.dto';
 import { AuthGuard } from '@nestjs/passport';
+import { request } from 'express';
+import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 
+@ApiTags('auth')
 @Controller('auth')
-//@UseGuards(AuthGuard('jwt'))
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
-
-  // Rutas
 
   @Post('signin')
   signIn(@Body() credential: SignInAuthDto) {
@@ -30,9 +32,16 @@ export class AuthController {
     return this.authService.signUp(user);
   }
 
+  @Get('auth0/protected')
+  getAuth0Protected(@Req() req: Request) {
+    console.log(JSON.stringify(request.oidc.idToken));
+    return JSON.stringify(request.oidc.user);
+  }
+
+  @ApiBearerAuth('access-token')
   @UseGuards(AuthGuard('jwt'))
-  @Post('profile')
-  getProfile(@Request() req) {
+  @Get('protected')
+  getProtected(@Req() req) {
     return req.user;
   }
 }

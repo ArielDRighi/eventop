@@ -7,21 +7,15 @@ import {
   HttpStatus,
   Param,
   Post,
-  UploadedFile,
-  UseInterceptors,
 } from '@nestjs/common';
 import { EventService } from './events.service';
 import { CreateEventDto } from './dto/CreateEvent.dto';
-import { CloudinaryService } from './cloudinary.service';
-import { FileInterceptor } from '@nestjs/platform-express';
-import * as Multer from 'multer';
+import { ApiTags } from '@nestjs/swagger';
 
+ApiTags('events');
 @Controller('events')
 export default class EventController {
-  constructor(
-    private readonly eventService: EventService,
-    private readonly cloudinaryService: CloudinaryService,
-  ) {}
+  constructor(private readonly eventService: EventService) {}
 
   //   Rutas
 
@@ -34,37 +28,18 @@ export default class EventController {
 
   @Get(':id')
   @HttpCode(HttpStatus.OK)
-  getEventById(@Param('id') eventId: number) {
+  getCategoryById(@Param('id') eventId: number) {
     const event = this.eventService.getEventById(eventId);
     return event;
   }
 
   @Post('create')
-  @UseInterceptors(FileInterceptor('image'))
-  async createEvent(
-    @Body() body: any, // Lo recibimos como 'any' para manejar el texto JSON.
-    @UploadedFile() file: Express.Multer.File,
-  ) {
-    // Parseamos el campo body que contiene el JSON.
-    const createEventDto: CreateEventDto = JSON.parse(body);
-
-    // Subimos la imagen a Cloudinary y obtenemos la URL
-    const imageUrl = await this.cloudinaryService.uploadImage(file);
-
-    // Creamos el evento
-    const event = {
-      ...createEventDto,
-      imageUrl,
-    };
-
-    // Guardamos el evento en la base de datos
-    const eventCreated = await this.eventService.createEvent(event);
-
-    return { message: 'Evento creado exitosamente', eventCreated };
+  createCategory(@Body() createEventDto: CreateEventDto) {
+    return this.eventService.createEvent(createEventDto);
   }
 
-  @Delete('id')
-  deleteEvent(@Param('id') eventId: number) {
+  @Delete(':id')
+  deleteCategory(@Param('id') eventId: number) {
     return this.eventService.deleteEvent(eventId);
   }
 }

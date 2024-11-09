@@ -6,7 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { EventsModule } from './events/events.module';
 import { CategoriesModule } from './categories/categories.module';
 import { LocationsModule } from './locations/locations.module';
-import TypeOrmConfig from './config/data-source';
+import TypeOrmConfig from './config/typeorm';
 
 @Module({
   imports: [
