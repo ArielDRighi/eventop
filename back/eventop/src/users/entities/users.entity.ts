@@ -1,4 +1,4 @@
-import { Role } from 'src/auth/roles.enum';
+import { Role } from '@app/auth/enum/roles.enum';
 import {
   Entity,
   PrimaryGeneratedColumn,
