@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   HttpCode,
+  HttpException,
   HttpStatus,
   Param,
   Post,
@@ -12,34 +13,50 @@ import { EventService } from './events.service';
 import { CreateEventDto } from './dto/CreateEvent.dto';
 import { ApiTags } from '@nestjs/swagger';
 
-ApiTags('events');
+@ApiTags('events')
 @Controller('events')
 export default class EventController {
   constructor(private readonly eventService: EventService) {}
 
-  //   Rutas
+  // Rutas
 
   @Get()
   @HttpCode(HttpStatus.OK)
-  getEvents() {
-    const events = this.eventService.getEvents();
-    return events;
+  async getEvents() {
+    try {
+      return await this.eventService.getEvents();
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   @Get(':id')
   @HttpCode(HttpStatus.OK)
-  getCategoryById(@Param('id') eventId: number) {
-    const event = this.eventService.getEventById(eventId);
-    return event;
+  async getEventById(@Param('id') eventId: number) {
+    try {
+      return await this.eventService.getEventById(eventId);
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.NOT_FOUND);
+    }
   }
 
   @Post('create')
-  createCategory(@Body() createEventDto: CreateEventDto) {
-    return this.eventService.createEvent(createEventDto);
+  @HttpCode(HttpStatus.CREATED)
+  async createEvent(@Body() createEventDto: CreateEventDto) {
+    try {
+      return await this.eventService.createEvent(createEventDto);
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+    }
   }
 
   @Delete(':id')
-  deleteCategory(@Param('id') eventId: number) {
-    return this.eventService.deleteEvent(eventId);
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async deleteEvent(@Param('id') eventId: number) {
+    try {
+      return await this.eventService.deleteEvent(eventId);
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.NOT_FOUND);
+    }
   }
 }
