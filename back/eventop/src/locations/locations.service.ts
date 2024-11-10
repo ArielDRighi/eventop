@@ -4,8 +4,8 @@ import {
   BadRequestException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Location } from './entities/locations.entity';
 import { Repository } from 'typeorm';
+import { Location } from './entities/locations.entity';
 import { CreateLocationDto } from './dto/CreateLocation.dto';
 
 @Injectable()
@@ -38,8 +38,7 @@ export class LocationService {
   ): Promise<Location> {
     const newLocation = this.locationRepository.create(createLocationDto);
     try {
-      const savedLocation = await this.locationRepository.save(newLocation);
-      return savedLocation;
+      return await this.locationRepository.save(newLocation);
     } catch (error) {
       throw new BadRequestException('Failed to create location');
     }

@@ -48,6 +48,10 @@ export class UserController {
   @UseGuards(AuthGuard('jwt'), RoleGuard)
   @Get()
   async getAllUsers() {
-    return this.userService.getAllUsers();
+    try {
+      return await this.userService.getAllUsers();
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 }

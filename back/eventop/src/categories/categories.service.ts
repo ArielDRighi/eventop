@@ -4,8 +4,8 @@ import {
   BadRequestException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Category } from './entities/categories.entity';
 import { Repository } from 'typeorm';
+import { Category } from './entities/categories.entity';
 import { CreateCategoryDto } from './dto/CreateCategory.dto';
 
 @Injectable()
@@ -14,8 +14,6 @@ export class CategoryService {
     @InjectRepository(Category)
     private readonly categoryRepository: Repository<Category>,
   ) {}
-
-  //   Servicios
 
   async getCategories(): Promise<Category[]> {
     const categories = await this.categoryRepository.find();
@@ -38,11 +36,9 @@ export class CategoryService {
   async createCategory(
     createCategoryDto: CreateCategoryDto,
   ): Promise<Category> {
-    const { name } = createCategoryDto;
-    const newCategory = this.categoryRepository.create({ name });
+    const newCategory = this.categoryRepository.create(createCategoryDto);
     try {
-      const savedCategory = await this.categoryRepository.save(newCategory);
-      return savedCategory;
+      return await this.categoryRepository.save(newCategory);
     } catch (error) {
       throw new BadRequestException('Failed to create category');
     }

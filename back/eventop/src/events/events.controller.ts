@@ -18,8 +18,6 @@ import { ApiTags } from '@nestjs/swagger';
 export default class EventController {
   constructor(private readonly eventService: EventService) {}
 
-  // Rutas
-
   @Get()
   @HttpCode(HttpStatus.OK)
   async getEvents() {
