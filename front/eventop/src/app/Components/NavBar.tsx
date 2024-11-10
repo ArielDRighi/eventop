@@ -3,7 +3,7 @@ import React from "react";
 
 const NavBarUsers = () => {
   return (
-    <div className="navbar ">
+    <div className="navbar bg-gray-900 ">
       <div className="navbar-start">
         <Link href={"/"} className="text-xl font-bold">
           <span className="text-purple-500">E</span>ven
@@ -41,10 +41,10 @@ const NavBarUsers = () => {
         </ul>
       </div>
       <div className="navbar-end">
-        <button className="btn bg-purple-500 text-white mx-3">
-          Cerrar Sesion
-        </button>
-        <button className="btn bg-purple-500 text-white">Iniciar Sesion</button>
+        {/* <button className="btn bg-purple-500 text-white mx-3">
+          <Link href={"../views/Register"}>Registrarse</Link> 
+        </button> */}
+        <button  className="btn bg-purple-500 text-white"> <Link href={"/micuenta"}>Iniciar</Link></button>
       </div>
     </div>
   );

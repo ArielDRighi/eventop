@@ -34,7 +34,7 @@ export const Navbar = async () => {
       </div>
       <div className="flex flex-row items-center gap-2">
         <Link
-          href={"/micuenta"}  // Lógica condicional corregida aquí
+          href={"/micuenta"}  
           className="py-2 sm:py-3 px-4 rounded-lg bg-slate-50 border border-blue-600 text-blue-500 hover:bg-blue-600 hover:text-slate-50 transition ease-in-out font-bold text-sm"
         >
           Mi Cuenta

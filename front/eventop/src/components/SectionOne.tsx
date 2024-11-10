@@ -9,14 +9,11 @@ const LayoutOne = () => {
           <section className="sticky">
             <div className="max-w-lg px-4 sm:pt-24 pt-12 sm:pb-8 mx-auto text-left md:max-w-none md:text-center">
               <h1 className="font-extrabold leading-10 tracking-tight text-left text-white  sm:leading-none text-5xl sm:text-5xl">
-               
-              
-
                 <span className="inline md:block">Gestion de Entradas en </span>
                 <span className="relative mt-2 bg-clip-text text-purple-500 md:inline-block">
                   Minutos.
                 </span>
-                
+
                 <br />
                 <p className="text-sm font-black text-zinc-500 mt-4">
                   Olvidate del caos en tus eventos y dale una impresion mas
@@ -64,7 +61,10 @@ const LayoutOne = () => {
                             className="inline-flex items-center justify-center text-sm font-semibold text-black duration-200 hover:text-blue-500 focus:outline-none focus-visible:outline-gray-600"
                             href="#"
                           >
-                            <span className="text-purple-500"> Explorar &nbsp; → </span>
+                            <span className="text-purple-500">
+                              {" "}
+                              Explorar &nbsp; →{" "}
+                            </span>
                           </a>
                         </div>
                       </div>
@@ -85,8 +85,6 @@ const LayoutOne = () => {
           </div>
 
           <div className="mt-32" />
-
-         
         </div>
       </div>
     </div>
