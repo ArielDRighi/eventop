@@ -13,11 +13,12 @@ import { UserService } from './users.service';
 import { AuthGuard } from '@nestjs/passport';
 import { CreateUserDto } from 'src/auth/dto/createUser.dto';
 import { Roles } from 'src/decorators/roles.decorator';
-import { Role } from 'src/auth/roles.enum';
+import { Role } from 'src/auth/enum/roles.enum';
 import { RoleGuard } from 'src/auth/roles.guard';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 
 @ApiTags('users')
+@ApiBearerAuth('access-token')
 @Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
@@ -41,5 +42,12 @@ export class UserController {
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
+  }
+
+  @Roles(Role.Admin)
+  @UseGuards(AuthGuard('jwt'), RoleGuard)
+  @Get()
+  async getAllUsers() {
+    return this.userService.getAllUsers();
   }
 }
