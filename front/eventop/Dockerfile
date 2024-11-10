@@ -16,8 +16,8 @@ COPY . .
 # Compila el proyecto
 RUN npm run build
 
-# Expone el puerto en el que la aplicación backend escucha
-EXPOSE 3001
+# Expone el puerto en el que la aplicación frontend escucha
+EXPOSE 3000
 
 # Comando para ejecutar la aplicación
-CMD ["npm", "run", "start:prod"]
+CMD ["npm", "start"]
