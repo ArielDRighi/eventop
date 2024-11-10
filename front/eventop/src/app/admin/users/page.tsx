@@ -1,10 +1,12 @@
-import Search from "@/app/Components/Search";
+
+
+import UserDashboardAdmin from "../../../components/UserDashboardAdmin"
 import React from "react";
 
 const UserManagement = () => {
   return (
     <div>
-      <Search/>
+      <UserDashboardAdmin/>
     </div>
   );
 };

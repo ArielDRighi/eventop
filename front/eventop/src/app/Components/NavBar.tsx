@@ -13,13 +13,23 @@ const NavBarUsers = () => {
       <div className="navbar-center text-sm hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
           <li>
+            <Link href={"/"}>
+              <button>Inicio</button>
+            </Link>
+          </li>
+          <li>
             <Link href={"#"}>
-              <button>Eventos</button>
+              <button>Encuentra Eventos</button>
             </Link>
           </li>
           <li>
             <Link href={"#"}>
               <button>Precios</button>
+            </Link>
+          </li>
+          <li>
+            <Link href={"/admin"}>
+              <button>Admin</button>
             </Link>
           </li>
           <li>
@@ -44,7 +54,7 @@ const NavBarUsers = () => {
         {/* <button className="btn bg-purple-500 text-white mx-3">
           <Link href={"../views/Register"}>Registrarse</Link> 
         </button> */}
-        <button  className="btn bg-purple-500 text-white"> <Link href={"/micuenta"}>Iniciar</Link></button>
+        <button  className="btn bg-purple-500 text-white hover:bg-purple-600"> <Link href={"/micuenta"}>Mi Cuenta</Link></button>
       </div>
     </div>
   );
