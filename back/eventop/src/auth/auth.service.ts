@@ -39,26 +39,16 @@ export class AuthService {
     if (user.password !== user.confirmPassword) {
       throw new BadRequestException('Las contraseñas no coinciden');
     }
-
     // Revisamos si el email ya existe en la DB
     const dbUser = await this.userService.findOneByEmail(user.email);
     if (dbUser) {
-      throw new BadRequestException('Email ya registrado en la base de datos');
+      throw new BadRequestException('El email ya está registrado');
     }
-
-    // Hasheamos la password
     const hashedPassword = await bcrypt.hash(user.password, 10);
-    if (!hashedPassword) {
-      throw new BadRequestException('Ocurrió un error con la contraseña');
-    }
-
-    const newUser = await this.userService.createUser({
+    const newUser = {
       ...user,
       password: hashedPassword,
-    });
-
-    // Excluir el campo password de la respuesta
-    const { password, ...result } = newUser;
-    return result;
+    };
+    return await this.userService.createUser(newUser);
   }
 }

@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   HttpCode,
+  HttpException,
   HttpStatus,
   Param,
   Post,
@@ -17,29 +18,43 @@ import { ApiTags } from '@nestjs/swagger';
 export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
 
-  //   Rutas
-
   @Get()
   @HttpCode(HttpStatus.OK)
-  getCategories() {
-    const categories = this.categoryService.getCategories();
-    return categories;
+  async getCategories() {
+    try {
+      return await this.categoryService.getCategories();
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   @Get(':id')
   @HttpCode(HttpStatus.OK)
-  getCategoryById(@Param('id') categoryId: number) {
-    const category = this.categoryService.getCategoryById(categoryId);
-    return category;
+  async getCategoryById(@Param('id') categoryId: number) {
+    try {
+      return await this.categoryService.getCategoryById(categoryId);
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.NOT_FOUND);
+    }
   }
 
   @Post('create')
-  createCategory(@Body() createCategoryDto: CreateCategoryDto) {
-    return this.categoryService.createCategory(createCategoryDto);
+  @HttpCode(HttpStatus.CREATED)
+  async createCategory(@Body() createCategoryDto: CreateCategoryDto) {
+    try {
+      return await this.categoryService.createCategory(createCategoryDto);
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+    }
   }
 
   @Delete(':id')
-  deleteCategory(@Param('id') categoryId: number) {
-    return this.categoryService.deleteCategory(categoryId);
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async deleteCategory(@Param('id') categoryId: number) {
+    try {
+      return await this.categoryService.deleteCategory(categoryId);
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.NOT_FOUND);
+    }
   }
 }
