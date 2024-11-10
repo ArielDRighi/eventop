@@ -32,11 +32,11 @@ export class AuthController {
     return this.authService.signUp(user);
   }
 
-  @Get('auth0/protected')
-  getAuth0Protected(@Req() req: Request) {
-    console.log(JSON.stringify(request.oidc.idToken));
-    return JSON.stringify(request.oidc.user);
-  }
+  // @Get('auth0/protected')
+  // getAuth0Protected(@Req() req: Request) {
+  //   console.log(JSON.stringify(request.oidc.idToken));
+  //   return JSON.stringify(request.oidc.user);
+  // }
 
   @ApiBearerAuth('access-token')
   @UseGuards(AuthGuard('jwt'))
