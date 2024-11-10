@@ -7,12 +7,13 @@ import { ToggleView } from '@/components/ToggleView';
 
 const Page: React.FC = () => {
     
+  const accesToken = localStorage.getItem('accesToken')
+  if (accesToken) {window.location.href = "/micuenta/dashboard"}
+  else {
   const [activeView, setActiveView] = useState<string>('Login');
-
-  
-
+   
   const views: { [key: string]: React.ReactNode } = {
-    Login: <Login />,
+  Login: <Login />,
     Register: <Register />,
   };
 
@@ -22,6 +23,7 @@ const Page: React.FC = () => {
       {views[activeView]}
     </>
   );
+}
 };
 
 export default Page;

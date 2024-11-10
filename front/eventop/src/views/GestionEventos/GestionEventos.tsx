@@ -4,7 +4,7 @@ import Categorias from "@/helpers/arrayCategorias";
 import Ubicaciones from "@/helpers/arrayUbicaciones";
 import Events from "@/helpers/arrayEventos";
 import React, { useState } from "react";
-import CrearEvento from "@/components/CrearEvento";
+import CreateEvent from "@/components/CrearEvento";
 
 export const GestionEventos = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -30,7 +30,7 @@ export const GestionEventos = () => {
       </div>
 
       {/* CrearEventos */}
-       <CrearEvento/>
+       <CreateEvent/>
      
     </section>
   );

@@ -58,7 +58,8 @@ function Register() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    await register(userData);
+    const response = await register(userData);
+    console.log(response)
 
     Swal.fire({
       title: "Registro exitoso",
@@ -88,7 +89,7 @@ function Register() {
       confirmPassword: false,
     })
 
-    redirect("/micuenta");
+      redirect("/micuenta");
   };
 
   useEffect(() => {

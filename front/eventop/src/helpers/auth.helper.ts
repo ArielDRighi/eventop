@@ -10,17 +10,15 @@ export const register = async (userData: IRegisterProps) => {
     role: 0, // Agregar la propiedad 'role' con valor 0
   };
   try {
-   const response = await fetch(`${APIURL}/auth/signup`, {
+    const response = await fetch(`${APIURL}/auth/signup`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
       },
       body: JSON.stringify(dataToSend),
-      mode: "no-cors"
     });
-    if (response.ok) return response.json() 
-      else throw new Error("Fallo el registro")
-     
+    if (response.ok) return response.json();
+    else throw new Error("Fallo el registro");
   } catch (error: any) {
     throw new Error(error);
   }
@@ -35,9 +33,9 @@ export const login = async (userData: ILoginProps) => {
       },
       body: JSON.stringify(userData),
     });
+
     const res = await response.json();
-    console.log(res)
-    if (response.status === 400) {
+    if (res.status === 400) {
       Swal.fire({
         title: res.message,
         icon: "error",
