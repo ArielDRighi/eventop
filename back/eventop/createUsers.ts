@@ -3,11 +3,11 @@ import { User } from '@app/users/entities/users.entity';
 import { connectionSource } from '@app/config/typeorm';
 
 const users = [
-  { name: 'User1', email: 'user1@example.com', password: 'password1' },
-  { name: 'User2', email: 'user2@example.com', password: 'password2' },
-  { name: 'User3', email: 'user3@example.com', password: 'password3' },
-  { name: 'User4', email: 'user4@example.com', password: 'password4' },
-  { name: 'User5', email: 'user5@example.com', password: 'password5' },
+  { name: 'User1', email: 'user1@example.com', password: 'Password1!' },
+  { name: 'User2', email: 'user2@example.com', password: 'Password2!' },
+  { name: 'User3', email: 'user3@example.com', password: 'Password3!' },
+  { name: 'User4', email: 'user4@example.com', password: 'Password4!' },
+  { name: 'User5', email: 'user5@example.com', password: 'Password5!' },
 ];
 
 async function createUsers() {
