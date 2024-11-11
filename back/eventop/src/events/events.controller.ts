@@ -8,15 +8,22 @@ import {
   HttpStatus,
   Param,
   Post,
+  UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
 import { EventService } from './events.service';
 import { CreateEventDto } from './dto/CreateEvent.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { CloudinaryService } from './cloudinary.service';
 
 @ApiTags('events')
 @Controller('events')
 export default class EventController {
-  constructor(private readonly eventService: EventService) {}
+  constructor(
+    private readonly eventService: EventService,
+    private readonly cloudinaryService: CloudinaryService,
+  ) {}
 
   @Get()
   @HttpCode(HttpStatus.OK)
@@ -39,10 +46,28 @@ export default class EventController {
   }
 
   @Post('create')
-  @HttpCode(HttpStatus.CREATED)
-  async createEvent(@Body() createEventDto: CreateEventDto) {
+  @UseInterceptors(FileInterceptor('image'))
+  async createEvent(
+    @Body('data') data: any, // Lo recibimos como 'any' para manejar el texto JSON.
+    @UploadedFile() file: Express.Multer.File,
+  ) {
     try {
-      return await this.eventService.createEvent(createEventDto);
+      // Parseamos el campo body que contiene el JSON.
+      const createEventDto: CreateEventDto = JSON.parse(data);
+
+      // Subimos la imagen a Cloudinary y obtenemos la URL
+      const imageUrl = await this.cloudinaryService.uploadImage(file);
+
+      // Creamos el evento
+      const event = {
+        ...createEventDto,
+        imageUrl,
+      };
+
+      // Guardamos el evento en la base de datos
+      const eventCreated = await this.eventService.createEvent(event);
+
+      return { message: 'Evento creado exitosamente', eventCreated };
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
