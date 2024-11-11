@@ -2,16 +2,24 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Event } from './entitie/events.entity';
 import { Repository } from 'typeorm';
+import { Category } from 'src/categories/entitie/categories.entity';
+import { Location } from 'src/locations/entitie/locations.entity';
 
 @Injectable()
 export class EventService {
   constructor(
     @InjectRepository(Event)
     private readonly eventRepository: Repository<Event>,
+    @InjectRepository(Location)
+    private readonly locationRepository: Repository<Location>,
+    @InjectRepository(Category)
+    private readonly categoryRepository: Repository<Category>,
   ) {}
 
   async getEvents(): Promise<Event[]> {
-    const events = await this.eventRepository.find();
+    const events = await this.eventRepository.find({
+      relations: { location: true, category: true },
+    });
     if (!events.length) {
       throw new NotFoundException('Ocurrió un error al cargar los eventos');
     }
@@ -19,7 +27,10 @@ export class EventService {
   }
 
   async getEventById(eventId: number): Promise<Event> {
-    const event = await this.eventRepository.findOne({ where: { eventId } });
+    const event = await this.eventRepository.findOne({
+      where: { eventId },
+      relations: { location: true, category: true },
+    });
     if (!event) {
       throw new NotFoundException(`Evento con ID ${eventId} no encontrado`);
     }
@@ -27,8 +38,30 @@ export class EventService {
   }
 
   async createEvent(createEventDto): Promise<Event> {
-    const { name, description, date, price, currency, location, imageUrl } =
-      createEventDto;
+    const {
+      name,
+      description,
+      date,
+      price,
+      currency,
+      locationId,
+      imageUrl,
+      categoryId,
+    } = createEventDto;
+
+    const location = await this.locationRepository.findOne({
+      where: { locationId },
+    });
+    if (!location) {
+      throw new Error(`Locación con ID ${locationId} no encontrada`);
+    }
+
+    const category = await this.categoryRepository.findOne({
+      where: { categoryId },
+    });
+    if (!category) {
+      throw new Error(`Categoria con ID ${locationId} no encontrada`);
+    }
 
     const newEvent = this.eventRepository.create({
       name,
@@ -38,6 +71,7 @@ export class EventService {
       currency,
       location,
       imageUrl,
+      category,
     });
 
     const savedEvent = await this.eventRepository.save(newEvent);

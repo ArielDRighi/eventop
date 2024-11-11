@@ -17,6 +17,14 @@ export class CreateEventDto {
   @IsNotEmpty()
   price: number;
 
+  @IsNumber()
+  @IsNotEmpty()
+  category: number;
+
+  @IsNumber()
+  @IsNotEmpty()
+  location: number;
+
   @IsString()
   @IsNotEmpty()
   currency: string;

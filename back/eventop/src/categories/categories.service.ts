@@ -51,6 +51,6 @@ export class CategoryService {
       );
     }
     await this.categoryRepository.delete(categoryId);
-    return `Categoria con ID${categoryId} eliminada con éxito!`;
+    return `Categoria con ID ${categoryId} eliminada con éxito!`;
   }
 }

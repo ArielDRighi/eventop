@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   HttpCode,
+  HttpException,
   HttpStatus,
   Param,
   Post,
@@ -27,44 +28,58 @@ export default class EventController {
 
   @Get()
   @HttpCode(HttpStatus.OK)
-  getEvents() {
-    const events = this.eventService.getEvents();
-    return events;
+  async getEvents() {
+    try {
+      return await this.eventService.getEvents();
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   @Get(':id')
   @HttpCode(HttpStatus.OK)
-  getEventById(@Param('id') eventId: number) {
-    const event = this.eventService.getEventById(eventId);
-    return event;
+  async getEventById(@Param('id') eventId: number) {
+    try {
+      return await this.eventService.getEventById(eventId);
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.NOT_FOUND);
+    }
   }
 
   @Post('create')
   @UseInterceptors(FileInterceptor('image'))
   async createEvent(
-    @Body() body: any, // Lo recibimos como 'any' para manejar el texto JSON.
+    @Body('data') data: any, // Lo recibimos como 'any' para manejar el texto JSON.
     @UploadedFile() file: Express.Multer.File,
   ) {
-    // Parseamos el campo body que contiene el JSON.
-    const createEventDto: CreateEventDto = JSON.parse(body);
+    try {
+      // Parseamos el campo body que contiene el JSON.
+      const createEventDto: CreateEventDto = JSON.parse(data);
 
-    // Subimos la imagen a Cloudinary y obtenemos la URL
-    const imageUrl = await this.cloudinaryService.uploadImage(file);
+      // Subimos la imagen a Cloudinary y obtenemos la URL
+      const imageUrl = await this.cloudinaryService.uploadImage(file);
 
-    // Creamos el evento
-    const event = {
-      ...createEventDto,
-      imageUrl,
-    };
+      // Creamos el evento
+      const event = {
+        ...createEventDto,
+        imageUrl,
+      };
 
-    // Guardamos el evento en la base de datos
-    const eventCreated = await this.eventService.createEvent(event);
+      // Guardamos el evento en la base de datos
+      const eventCreated = await this.eventService.createEvent(event);
 
-    return { message: 'Evento creado exitosamente', eventCreated };
+      return { message: 'Evento creado exitosamente', eventCreated };
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+    }
   }
 
-  @Delete('id')
-  deleteEvent(@Param('id') eventId: number) {
-    return this.eventService.deleteEvent(eventId);
+  @Delete(':id')
+  async deleteEvent(@Param('id') eventId: number) {
+    try {
+      return await this.eventService.deleteEvent(eventId);
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.NOT_FOUND);
+    }
   }
 }
