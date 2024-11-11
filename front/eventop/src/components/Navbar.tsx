@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 
-export const Navbar = async () => {
+export const Navbar =  () => {
 
   return (
     <nav className="flex justify-between items-center w-full lg:max-w-6xl mx-auto py-4 md:py-8 ">
