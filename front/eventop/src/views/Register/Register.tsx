@@ -2,13 +2,13 @@
 
 import { IRegisterProps, IRegisterErrors } from "@/interfaces/IRegisterProps";
 import { useEffect, useState } from "react";
-import { redirect, useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 import Swal from "sweetalert2";
 import validateRegisterForm from "@/helpers/validateRegisterForm";
 import { register } from "@/helpers/auth.helper";
 
 function Register() {
-  const router = useRouter();
+  // const router = useRouter();
 
   const [userData, setUserData] = useState<IRegisterProps>({
     name: "",
@@ -87,7 +87,7 @@ function Register() {
       email: false,
       password: false,
       confirmPassword: false,
-    })
+    });
 
       redirect("/micuenta");
   };
@@ -103,109 +103,137 @@ function Register() {
   }, [userData]);
 
   return (
-    <section className="min-h-1/2 flex justify-center">
-      <form onSubmit={handleSubmit}>
-        <div className="mb-6 text-center">
-          <h1 className="text-3xl font-bold text-gray-800">Register</h1>
+    <div className="bg-gray-900 text-white flex min-h-screen flex-col items-center pt-16 sm:justify-center sm:pt-0">
+      <a href="#">
+        <div className="text-foreground font-semibold text-2xl tracking-tighter mx-auto flex items-center gap-2">
+          EvenTop
         </div>
+      </a>
+      <div className="relative mt-12 w-full max-w-lg sm:mt-10">
+        <div className="relative -mb-px h-px w-full bg-gradient-to-r from-transparent via-purple-500 to-transparent"></div>
+        <div className="mx-5 border border-b-white/20 sm:border-t-white/20 shadow-[20px_0_20px_20px] shadow-slate-500/10  rounded-lg border-white/20 border-l-white/20 border-r-white/20 sm:shadow-sm lg:rounded-xl lg:shadow-none">
+          <div className="flex flex-col p-6">
+            <h3 className="text-xl font-semibold leading-6 tracking-tighter">
+              Registro
+            </h3>
+            <p className="mt-1.5 text-sm font-medium text-white/50">
+              Crea tu cuenta!
+            </p>
+          </div>
+          <div className="p-6 pt-0">
+            <form onSubmit={handleSubmit}>
+              {/* Name Input */}
+              <div className="mt-4 group relative rounded-lg border focus-within:border-sky-200 px-3 pb-1.5 pt-2.5 duration-200 focus-within:ring focus-within:ring-sky-300/30">
+                <div className="flex justify-between">
+                  <label className="text-xs font-medium text-muted-foreground group-focus-within:text-white text-gray-400">
+                    Name
+                  </label>
+                </div>
+                <input
+                  type="text"
+                  name="name"
+                  id="name"
+                  value={userData.name}
+                  onChange={handleOnChange}
+                  onBlur={handleOnBlur}
+                  placeholder="Nombre"
+                  className="block w-full border-0 bg-transparent p-0 text-sm placeholder:text-muted-foreground/90 focus:outline-none focus:ring-0 sm:leading-7 text-foreground"
+                />
+                {touched.name && error.name && (
+                  <span className="text-red-500 text-sm block">
+                    {error.name}
+                  </span>
+                )}
+              </div>
 
-        {/* Name Input */}
-        <div className="flex flex-col gap-2">
-          <label
-            htmlFor="name"
-            className="text-sm font-medium text-gray-700 capitalize"
-          ></label>
-          <input
-            type="text"
-            name="name"
-            id="name"
-            value={userData.name}
-            onChange={handleOnChange}
-            onBlur={handleOnBlur}
-            placeholder="Name"
-            className="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out shadow-sm hover:shadow-md focus:shadow-md"
-          />
-          {touched.name && error.name && (
-            <span className="text-red-500 text-sm">{error.name}</span>
-          )}
-        </div>
+              {/* Email Input */}
+              <div className="mt-4 group relative rounded-lg border focus-within:border-sky-200 px-3 pb-1.5 pt-2.5 duration-200 focus-within:ring focus-within:ring-sky-300/30">
+                <div className="flex justify-between">
+                  <label className="text-xs font-medium text-muted-foreground group-focus-within:text-white text-gray-400">
+                    Email
+                  </label>
+                </div>
+                <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  value={userData.email}
+                  onChange={handleOnChange}
+                  onBlur={handleOnBlur}
+                  placeholder="Correo electrónico"
+                  className="block w-full border-0 bg-transparent p-0 text-sm placeholder:text-muted-foreground/90 focus:outline-none focus:ring-0 sm:leading-7 text-foreground"
+                />
+                {touched.email && error.email && (
+                  <span className="text-red-500 text-sm block">
+                    {error.email}
+                  </span>
+                )}
+              </div>
 
-        {/* Email Input */}
-        <div className="flex flex-col gap-2">
-          <label
-            htmlFor="email"
-            className="text-sm font-medium text-gray-700 capitalize"
-          ></label>
-          <input
-            type="email"
-            name="email"
-            id="email"
-            value={userData.email}
-            onChange={handleOnChange}
-            onBlur={handleOnBlur}
-            placeholder="Email"
-            className="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out shadow-sm hover:shadow-md focus:shadow-md"
-          />
-          {touched.email && error.email && (
-            <span className="text-red-500 text-sm">{error.email}</span>
-          )}
-        </div>
+              {/* Password Input */}
+              <div className="mt-4 group relative rounded-lg border focus-within:border-purple-200 px-3 pb-1.5 pt-2.5 duration-200 focus-within:ring focus-within:ring-sky-300/30">
+                <div className="flex justify-between">
+                  <label className="text-xs font-medium text-muted-foreground group-focus-within:text-white text-gray-400">
+                    Password
+                  </label>
+                </div>
+                <div className="flex items-center">
+                  <input
+                    type="password"
+                    name="password"
+                    id="password"
+                    value={userData.password}
+                    onChange={handleOnChange}
+                    onBlur={handleOnBlur}
+                    placeholder="Contraseña"
+                    className="block w-full border-0 bg-transparent p-0 text-sm placeholder:text-muted-foreground/90 focus:outline-none focus:ring-0 sm:leading-7 text-foreground"
+                  />
+                </div>
+                {touched.password && error.password && (
+                  <span className="text-red-500 text-sm block">
+                    {error.password}
+                  </span>
+                )}
+              </div>
 
-        {/* Password Input */}
-        <div className="flex flex-col gap-2">
-          <label
-            htmlFor="password"
-            className="text-sm font-medium text-gray-700 capitalize"
-          ></label>
-          <input
-            type="password"
-            name="password"
-            id="password"
-            value={userData.password}
-            onChange={handleOnChange}
-            onBlur={handleOnBlur}
-            placeholder="Password"
-            className="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out shadow-sm hover:shadow-md focus:shadow-md"
-          />
-          {touched.password && error.password && (
-            <span className="text-red-500 text-sm">{error.password}</span>
-          )}
-        </div>
+              {/* Confirm Password Input */}
+              <div className="mt-4 group relative rounded-lg border focus-within:border-purple-200 px-3 pb-1.5 pt-2.5 duration-200 focus-within:ring focus-within:ring-sky-300/30">
+                <div className="flex justify-between">
+                  <label className="text-xs font-medium text-muted-foreground group-focus-within:text-white text-gray-400">
+                    Confirm Password
+                  </label>
+                </div>
+                <input
+                  type="password"
+                  name="confirmPassword"
+                  id="confirmPassword"
+                  value={userData.confirmPassword}
+                  onChange={handleOnChange}
+                  onBlur={handleOnBlur}
+                  placeholder="Confirmar Contraseña"
+                  className="block w-full border-0 bg-transparent p-0 text-sm placeholder:text-muted-foreground/90 focus:outline-none focus:ring-0 sm:leading-7 text-foreground"
+                />
+                {touched.confirmPassword && error.confirmPassword && (
+                  <span className="text-red-500 text-sm block">
+                    {error.confirmPassword}
+                  </span>
+                )}
+              </div>
 
-        {/* Confirm Password Input */}
-        <div className="flex flex-col gap-2">
-          <label
-            htmlFor="confirmPassword"
-            className="text-sm font-medium text-gray-700 capitalize"
-          ></label>
-          <input
-            type="password"
-            name="confirmPassword"
-            id="confirmPassword"
-            value={userData.confirmPassword}
-            onChange={handleOnChange}
-            onBlur={handleOnBlur}
-            placeholder="Confirm Password"
-            className="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out shadow-sm hover:shadow-md focus:shadow-md"
-          />
-          {touched.confirmPassword && error.confirmPassword && (
-            <span className="text-red-500 text-sm">
-              {error.confirmPassword}
-            </span>
-          )}
+              <div className="mt-4 flex items-center justify-end gap-x-2">
+                <button
+                  className="flex items-center justify-center font-bold rounded-xl bg-purple-600 px-4 py-3 text-sm text-white duration-200 hover:bg-purple-700"
+                  type="submit"
+                  disabled={isAble} // Disable submit button if fields are incomplete or errors exist
+                >
+                  Registrarse
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
-
-        <div className="text-center">
-          <button
-            type="submit"
-            disabled={isAble} // Disable submit button if fields are incomplete or errors exist
-            className="w-full text-slate-200 font-semibold py-2 px-4 rounded hover:bg-[#0070f3] transition duration-300 mt-2"
-          >
-            Register
-          </button>
-        </div>
-      </form>
-    </section>
+      </div>
+    </div>
   );
 }
 

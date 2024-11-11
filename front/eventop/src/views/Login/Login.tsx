@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 import { login } from "@/helpers/auth.helper";
 
+
 export const Login = () => {
   const router = useRouter();
 
@@ -31,7 +32,6 @@ export const Login = () => {
       ...userData,
       [name]: value,
     });
-
   };
 
   const handleOnBlur = (event: React.FocusEvent<HTMLInputElement>) => {
@@ -66,16 +66,14 @@ export const Login = () => {
     }
 
     try {
-
       const response = await login(userData);
 
-      console.log(response)
-      
-      const { access_token  } = response;
-       console.log(access_token)
+      console.log(response);
+
+      const { token, user } = response;
 
       // Almacenar token y datos de usuario en localStorage
-      localStorage.setItem("accesToken", JSON.stringify({ access_token }));
+      localStorage.setItem("userSession", JSON.stringify({ token, user }));
 
       // Pop-up de éxito
       Swal.fire({
@@ -117,62 +115,86 @@ export const Login = () => {
   }, [userData]);
 
   return (
-    <section className="flex justify-center h-1/2">
-      <form
-        onSubmit={handleSubmit}
-        className="flex flex-col items-center justify-around gap-2 w-full h-full md:w-1/2 mx-auto"
-      >
-        <div className="mb-6 text-center">
-          <h1 className="text-3xl font-bold text-gray-800">Iniciar Sesión</h1>
+    <div className="bg-gray-900 text-white flex min-h-screen flex-col items-center pt-16 sm:justify-center sm:pt-0">
+      <a href="#">
+        <div className="text-foreground font-semibold text-2xl tracking-tighter mx-auto flex items-center gap-2">
+          EvenTop
         </div>
-        <div>
-          <label
-            htmlFor="email"
-            className="text-base font-medium text-gray-700"
-          ></label>
-          <input
-            type="email"
-            name="email"
-            id="email"
-            value={userData.email}
-            onChange={handleOnChange}
-            onBlur={handleOnBlur}
-            placeholder="correo electronico"
-            className="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out shadow-sm hover:shadow-md focus:shadow-md"
-          />
-          {touched.email && error.email && (
-            <span className="text-red-500 text-sm block">{error.email}</span>
-          )}
+      </a>
+      <div className="relative mt-12 w-full max-w-lg sm:mt-10">
+        <div className="relative -mb-px h-px w-full bg-gradient-to-r from-transparent via-purple-500 to-transparent"></div>
+        <div className="mx-5 border  border-b-white/20 sm:border-t-white/20 shadow-[20px_0_20px_20px] shadow-slate-500/10  rounded-lg border-white/20 border-l-white/20 border-r-white/20 sm:shadow-sm lg:rounded-xl lg:shadow-none">
+          <div className="flex flex-col p-6">
+            <h3 className="text-xl font-semibold leading-6 tracking-tighter">
+              Iniciar Sesion
+            </h3>
+            <p className="mt-1.5 text-sm font-medium text-white/50">
+              Bienvenido de nuevo, ingresa tus credenciales para continuar.
+            </p>
+          </div>
+          <div className="p-6 pt-0">
+            <form onSubmit={handleSubmit}>
+              <div className="group relative rounded-lg border focus-within:border-sky-200 px-3 pb-1.5 pt-2.5 duration-200 focus-within:ring focus-within:ring-sky-300/30">
+                <div className="flex justify-between">
+                  <label className="text-xs font-medium text-muted-foreground group-focus-within:text-white text-gray-400">
+                    Email
+                  </label>
+                </div>
+                <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  value={userData.email}
+                  onChange={handleOnChange}
+                  onBlur={handleOnBlur}
+                  placeholder="Correo electrónico"
+                  className="block w-full border-0 bg-transparent p-0 text-sm placeholder:text-muted-foreground/90 focus:outline-none focus:ring-0 sm:leading-7 text-foreground"
+                />
+                {touched.email && error.email && (
+                  <span className="text-red-500 text-sm block">
+                    {error.email}
+                  </span>
+                )}
+              </div>
+              <div className="mt-4 group relative rounded-lg border focus-within:border-purple-200 px-3 pb-1.5 pt-2.5 duration-200 focus-within:ring focus-within:ring-sky-300/30">
+                <div className="flex justify-between">
+                  <label className="text-xs font-medium text-muted-foreground group-focus-within:text-white text-gray-400">
+                    Password
+                  </label>
+                </div>
+                <div className="flex items-center">
+                  <input
+                    type="password"
+                    name="password"
+                    id="password"
+                    value={userData.password}
+                    onChange={handleOnChange}
+                    onBlur={handleOnBlur}
+                    placeholder="Contraseña"
+                    className="block w-full border-0 bg-transparent p-0 text-sm placeholder:text-muted-foreground/90 focus:outline-none focus:ring-0 sm:leading-7 text-foreground"
+                  />
+                </div>
+                {touched.password && error.password && (
+                  <span className="text-red-500 text-sm block">
+                    {error.password}
+                  </span>
+                )}
+              </div>
+
+              <div className="mt-4 flex items-center justify-end gap-x-2">
+                
+                <button
+                  className="flex  items-center justify-center font-bold rounded-xl   bg-purple-600 px-4 py-3 text-sm text-white duration-200 hover:bg-purple-700"
+                  type="submit"
+                >
+                  Iniciar Sesion
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
-        <div>
-          <label
-            htmlFor="password"
-            className="text-base font-medium text-gray-700"
-          ></label>
-          <input
-            type="password"
-            name="password"
-            id="password"
-            value={userData.password}
-            onChange={handleOnChange}
-            onBlur={handleOnBlur}
-            placeholder="contraseña"
-            className="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out shadow-sm hover:shadow-md focus:shadow-md"
-          />
-          {touched.password && error.password && (
-            <span className="text-red-500 text-sm block">{error.password}</span>
-          )}
-        </div>
-        <div className="text-center">
-          <button
-            type="submit"
-            className="text-slate-200 font-semibold py-3 px-3 rounded-lg hover:bg-[#0070f3] stransition duration-300 focus:ring-2 focus:ring-blue-500 "
-          >
-            Iniciar Sesión
-          </button>
-        </div>
-      </form>
-    </section>
+      </div>
+    </div>
   );
 };
 
