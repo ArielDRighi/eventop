@@ -96,5 +96,7 @@ export class CategoryService {
         HttpStatus.BAD_REQUEST,
       );
     }
+    await this.categoryRepository.delete(categoryId);
+    return `Categoria con ID ${categoryId} eliminada con éxito!`;
   }
 }

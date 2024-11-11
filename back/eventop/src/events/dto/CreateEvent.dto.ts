@@ -39,10 +39,23 @@ export class CreateEventDto {
   price: number;
 
   @ApiProperty({
-    type: String,
-    description: 'The currency of the event',
+    type: Number,
+    description: 'The category of the event',
     required: true,
   })
+  @IsNumber()
+  @IsNotEmpty()
+  category_id: number;
+
+  @ApiProperty({
+    type: Number,
+    description: 'The category of the event',
+    required: true,
+  })
+  @IsNumber()
+  @IsNotEmpty()
+  location_id: number;
+
   @IsString()
   @IsNotEmpty()
   currency: string;
