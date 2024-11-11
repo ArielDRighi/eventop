@@ -8,12 +8,18 @@ import {
   HttpStatus,
   Param,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import { LocationService } from './locations.service';
 import { CreateLocationDto } from './dto/CreateLocation.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { Roles } from '@app/decorators/roles.decorator';
+import { Role } from '@app/auth/enum/roles.enum';
+import { AuthGuard } from '@nestjs/passport';
+import { RoleGuard } from '@app/auth/roles.guard';
 
 @ApiTags('locations')
+@ApiBearerAuth('access-token')
 @Controller('locations')
 export class LocationController {
   constructor(private readonly locationService: LocationService) {}
@@ -38,6 +44,8 @@ export class LocationController {
     }
   }
 
+  @Roles(Role.Admin)
+  @UseGuards(AuthGuard('jwt'), RoleGuard)
   @Post('create')
   @HttpCode(HttpStatus.CREATED)
   async createLocation(@Body() createLocationDto: CreateLocationDto) {
@@ -48,6 +56,8 @@ export class LocationController {
     }
   }
 
+  @Roles(Role.Admin)
+  @UseGuards(AuthGuard('jwt'), RoleGuard)
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   async deleteLocation(@Param('id') locationId: number) {

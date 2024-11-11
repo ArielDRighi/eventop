@@ -1,14 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsDate, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsString, IsDate, IsNumber } from 'class-validator';
 
-export class CreateEventDto {
+export class UpdateEventDto {
   @ApiProperty({
     type: String,
     description: 'The name of the event',
     required: true,
   })
   @IsString()
-  @IsNotEmpty()
   name: string;
 
   @ApiProperty({
@@ -17,7 +16,6 @@ export class CreateEventDto {
     required: true,
   })
   @IsString()
-  @IsNotEmpty()
   description: string;
 
   @ApiProperty({
@@ -26,7 +24,6 @@ export class CreateEventDto {
     required: true,
   })
   @IsDate()
-  @IsNotEmpty()
   date: Date;
 
   @ApiProperty({
@@ -35,42 +32,21 @@ export class CreateEventDto {
     required: true,
   })
   @IsNumber()
-  @IsNotEmpty()
   price: number;
 
   @ApiProperty({
-    type: Number,
-    description: 'The category of the event',
+    type: String,
+    description: 'The categoryId of the event',
     required: true,
   })
   @IsNumber()
-  @IsNotEmpty()
-  category_id: number;
+  categoryId: number;
 
   @ApiProperty({
-    type: Number,
-    description: 'The location of the event',
+    type: String,
+    description: 'The locationId of the event',
     required: true,
   })
   @IsNumber()
-  @IsNotEmpty()
-  location_id: number;
-
-  @ApiProperty({
-    type: String,
-    description: 'The currency of the event',
-    required: true,
-  })
-  @IsString()
-  @IsNotEmpty()
-  currency: string;
-
-  @ApiProperty({
-    type: String,
-    description: 'The image URL of the event',
-    required: true,
-  })
-  @IsString()
-  @IsNotEmpty()
-  imageUrl: string;
+  locationId: number;
 }
