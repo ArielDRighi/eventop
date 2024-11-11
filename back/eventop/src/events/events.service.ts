@@ -10,6 +10,7 @@ import { Event } from './entities/events.entity';
 import { CreateEventDto } from './dto/CreateEvent.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
 import { Category } from '@app/categories/entities/categories.entity';
+import { Location } from '@app/locations/entities/locations.entity';
 
 @Injectable()
 export class EventService {
