@@ -1,13 +1,16 @@
 import {
   Injectable,
   NotFoundException,
-  BadRequestException,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Event } from './entities/events.entity';
 import { Repository } from 'typeorm';
-import { Category } from 'src/categories/entities/categories.entity';
-import { Location } from 'src/locations/entities/locations.entity';
+import { Event } from './entities/events.entity';
+import { CreateEventDto } from './dto/CreateEvent.dto';
+import { UpdateEventDto } from './dto/update-event.dto';
+import { Category } from '@app/categories/entities/categories.entity';
+import { Location } from '@app/locations/entities/locations.entity';
 
 @Injectable()
 export class EventService {
@@ -36,7 +39,10 @@ export class EventService {
       relations: { location_id: true, category_id: true },
     });
     if (!event) {
-      throw new NotFoundException(`Event with ID ${eventId} not found`);
+      throw new HttpException(
+        `Event with ID ${eventId} not found`,
+        HttpStatus.NOT_FOUND,
+      );
     }
     return event;
   }
@@ -86,15 +92,41 @@ export class EventService {
     return eventWithRelations;
   }
 
-  async deleteEvent(eventId: number) {
+  async updateEvent(
+    eventId: number,
+    updateEventDto: UpdateEventDto,
+  ): Promise<Event> {
+    const event = await this.eventRepository.findOne({ where: { eventId } });
+
+    if (!event) {
+      throw new HttpException(
+        `Evento con ID ${eventId} no encontrado`,
+        HttpStatus.NOT_FOUND,
+      );
+    }
+
+    Object.assign(event, updateEventDto);
+
+    try {
+      return await this.eventRepository.save(event);
+    } catch (error) {
+      throw new HttpException('Failed to update event', HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  async deleteEvent(eventId: number): Promise<{ message: string }> {
     const event = await this.getEventById(eventId);
     if (!event) {
-      throw new NotFoundException(`Event with ID ${eventId} not found`);
+      throw new HttpException(
+        `Event with ID ${eventId} not found`,
+        HttpStatus.NOT_FOUND,
+      );
     }
     try {
       await this.eventRepository.remove(event);
+      return { message: 'Event deleted successfully' };
     } catch (error) {
-      throw new BadRequestException('Failed to delete event');
+      throw new HttpException('Failed to delete event', HttpStatus.BAD_REQUEST);
     }
   }
 }

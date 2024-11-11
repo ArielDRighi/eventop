@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import EventController from './events.controller';
+import { EventController } from './events.controller';
 import { EventService } from './events.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Event } from 'src/events/entities/events.entity';
