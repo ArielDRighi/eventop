@@ -56,6 +56,11 @@ export class CreateEventDto {
   @IsNotEmpty()
   location_id: number;
 
+  @ApiProperty({
+    type: String,
+    description: 'The currency of the event',
+    required: true,
+  })
   @IsString()
   @IsNotEmpty()
   currency: string;

@@ -27,7 +27,7 @@ import { CloudinaryService } from './cloudinary.service';
 @ApiTags('events')
 @ApiBearerAuth('access-token')
 @Controller('events')
-export default class EventController {
+export class EventController {
   constructor(
     private readonly eventService: EventService,
     private readonly cloudinaryService: CloudinaryService,

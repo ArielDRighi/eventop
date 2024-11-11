@@ -89,14 +89,12 @@ export class CategoryService {
     }
     try {
       await this.categoryRepository.remove(category);
-      return { message: 'Category deleted successfully' };
+      return { message: `Categoria con ID ${categoryId} eliminada con éxito!` };
     } catch (error) {
       throw new HttpException(
         'Failed to delete category',
         HttpStatus.BAD_REQUEST,
       );
     }
-    await this.categoryRepository.delete(categoryId);
-    return `Categoria con ID ${categoryId} eliminada con éxito!`;
   }
 }
