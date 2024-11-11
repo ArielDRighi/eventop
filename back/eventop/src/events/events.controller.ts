@@ -13,18 +13,17 @@ import {
 } from '@nestjs/common';
 import { EventService } from './events.service';
 import { CreateEventDto } from './dto/CreateEvent.dto';
-import { CloudinaryService } from './cloudinary.service';
+import { ApiTags } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
-import * as Multer from 'multer';
+import { CloudinaryService } from './cloudinary.service';
 
+@ApiTags('events')
 @Controller('events')
 export default class EventController {
   constructor(
     private readonly eventService: EventService,
     private readonly cloudinaryService: CloudinaryService,
   ) {}
-
-  //   Rutas
 
   @Get()
   @HttpCode(HttpStatus.OK)
@@ -75,6 +74,7 @@ export default class EventController {
   }
 
   @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
   async deleteEvent(@Param('id') eventId: number) {
     try {
       return await this.eventService.deleteEvent(eventId);

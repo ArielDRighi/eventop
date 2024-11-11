@@ -1,3 +1,4 @@
+import { Role } from '@app/auth/enum/roles.enum';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -22,13 +23,13 @@ export class User {
   @Column({ type: 'varchar', length: 50, default: 'local' })
   authProvider: string;
 
-  @Column({ type: 'varchar', length: 50, default: 'visitante' })
-  role: string;
+  @Column({ type: 'enum', enum: Role, default: 'guest' })
+  role: Role;
 
-  @Column({ type: 'varchar', length: 10, default: 'en' })
+  @Column({ type: 'varchar', length: 10, default: 'SPA' })
   preferredLanguage: string;
 
-  @Column({ type: 'varchar', length: 10, default: 'USD' })
+  @Column({ type: 'varchar', length: 10, default: 'ARS' })
   preferredCurrency: string;
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamp' })

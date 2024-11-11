@@ -1,27 +1,38 @@
+import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
 import {
   IsEmail,
+  IsEnum,
   IsNotEmpty,
-  IsNumber,
   IsOptional,
-  isString,
   IsString,
-  Length,
   Matches,
 } from 'class-validator';
+import { Role } from '../enum/roles.enum';
 
 export class CreateUserDto {
-  // Mail
+  @ApiProperty({
+    type: String,
+    description: 'The email of the user',
+    required: true,
+  })
   @IsEmail()
   @IsNotEmpty()
   email: string;
 
-  //   Name
+  @ApiProperty({
+    type: String,
+    description: 'The name of the user',
+    required: true,
+  })
   @IsString()
   @IsNotEmpty()
-  @Length(3, 80)
   name: string;
 
-  //   Password
+  @ApiProperty({
+    type: String,
+    description: 'The password of the user',
+    required: true,
+  })
   @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,15}$/, {
     message:
       'La contraseña debe tener al menos una minúscula, una mayúscula, un numero y un carácter especial',
@@ -30,7 +41,11 @@ export class CreateUserDto {
   @IsNotEmpty()
   password: string;
 
-  //   Confirm Password
+  @ApiProperty({
+    type: String,
+    description: 'The confirm password of the user',
+    required: true,
+  })
   @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,15}$/, {
     message:
       'La contraseña debe tener al menos una minúscula, una mayúscula, un numero y un carácter especial',
@@ -38,4 +53,9 @@ export class CreateUserDto {
   @IsString()
   @IsNotEmpty()
   confirmPassword: string;
+
+  @ApiHideProperty()
+  @IsEnum(Role)
+  @IsOptional()
+  role?: Role;
 }

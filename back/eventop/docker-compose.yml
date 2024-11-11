@@ -5,6 +5,8 @@ services:
     image: eventop  # Imagen del contenedor
     ports:
       - "3000:3000"  # Exponer el puerto 3000 del contenedor
+    env_file:
+      - .env
     environment:
     - DB_HOST=postgresdb
     - DB_PORT=5432
@@ -22,7 +24,8 @@ services:
     container_name: postgresdb  # Nombre del contenedor de la base de datos
     image: postgres  # Imagen de PostgreSQL
     volumes:
-      - ./postgres-data:/var/lib/postgresql/data  # Montar el volumen de la base de datos
+      - ./postgres-data:/var/lib/postgresql/data  # Monta los datos de la base de datos
+      - ./postgres-data/postgresql.conf:/etc/postgresql/postgresql.conf  # Monta el archivo de configuración correctamente
     env_file:
       - .env  # Variables de entorno
     ports:
@@ -38,6 +41,7 @@ services:
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@admin.com
       PGADMIN_DEFAULT_PASSWORD: admin
+      # POSTGRES_HOST_AUTH_METHOD: trust  # Permitir conexiones sin contraseña (solo para desarrollo)
     ports:
       - '8080:80'
     networks: 

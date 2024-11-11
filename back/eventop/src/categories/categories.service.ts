@@ -1,7 +1,11 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Category } from './entitie/categories.entity';
 import { Repository } from 'typeorm';
+import { Category } from './entities/categories.entity';
 import { CreateCategoryDto } from './dto/CreateCategory.dto';
 
 @Injectable()
@@ -11,12 +15,10 @@ export class CategoryService {
     private readonly categoryRepository: Repository<Category>,
   ) {}
 
-  //   Servicios
-
   async getCategories(): Promise<Category[]> {
     const categories = await this.categoryRepository.find();
     if (!categories.length) {
-      throw new NotFoundException('Ocurrió un error al cargar las categorías');
+      throw new NotFoundException('No categories found');
     }
     return categories;
   }
@@ -26,9 +28,7 @@ export class CategoryService {
       where: { categoryId },
     });
     if (!category) {
-      throw new NotFoundException(
-        `Categoria con ID ${categoryId} no encontrada`,
-      );
+      throw new NotFoundException(`Category with ID ${categoryId} not found`);
     }
     return category;
   }
@@ -36,19 +36,23 @@ export class CategoryService {
   async createCategory(
     createCategoryDto: CreateCategoryDto,
   ): Promise<Category> {
-    const { name } = createCategoryDto;
-
-    const newCategory = this.categoryRepository.create({ name });
-    const savedCategory = await this.categoryRepository.save(newCategory);
-    return savedCategory;
+    const newCategory = this.categoryRepository.create(createCategoryDto);
+    try {
+      return await this.categoryRepository.save(newCategory);
+    } catch (error) {
+      throw new BadRequestException('Failed to create category');
+    }
   }
 
   async deleteCategory(categoryId: number) {
     const category = await this.getCategoryById(categoryId);
     if (!category) {
-      throw new NotFoundException(
-        `Categoria con ID ${categoryId} no encontrada`,
-      );
+      throw new NotFoundException(`Category with ID ${categoryId} not found`);
+    }
+    try {
+      await this.categoryRepository.remove(category);
+    } catch (error) {
+      throw new BadRequestException('Failed to delete category');
     }
     await this.categoryRepository.delete(categoryId);
     return `Categoria con ID ${categoryId} eliminada con éxito!`;

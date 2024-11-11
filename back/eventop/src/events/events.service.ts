@@ -1,9 +1,14 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Event } from './entitie/events.entity';
+import { Event } from './entities/events.entity';
 import { Repository } from 'typeorm';
-import { Category } from 'src/categories/entitie/categories.entity';
-import { Location } from 'src/locations/entitie/locations.entity';
+import { Category } from 'src/categories/entities/categories.entity';
+import { Location } from 'src/locations/entities/locations.entity';
+import { CreateEventDto } from './dto/CreateEvent.dto';
 
 @Injectable()
 export class EventService {
@@ -18,10 +23,10 @@ export class EventService {
 
   async getEvents(): Promise<Event[]> {
     const events = await this.eventRepository.find({
-      relations: { location: true, category: true },
+      relations: { location_id: true, category_id: true },
     });
     if (!events.length) {
-      throw new NotFoundException('Ocurrió un error al cargar los eventos');
+      throw new NotFoundException('No events found');
     }
     return events;
   }
@@ -29,10 +34,10 @@ export class EventService {
   async getEventById(eventId: number): Promise<Event> {
     const event = await this.eventRepository.findOne({
       where: { eventId },
-      relations: { location: true, category: true },
+      relations: { location_id: true, category_id: true },
     });
     if (!event) {
-      throw new NotFoundException(`Evento con ID ${eventId} no encontrado`);
+      throw new NotFoundException(`Event with ID ${eventId} not found`);
     }
     return event;
   }
@@ -44,23 +49,23 @@ export class EventService {
       date,
       price,
       currency,
-      locationId,
+      location_id,
       imageUrl,
-      categoryId,
+      category_id,
     } = createEventDto;
 
     const location = await this.locationRepository.findOne({
-      where: { locationId },
+      where: { locationId: location_id },
     });
     if (!location) {
-      throw new Error(`Locación con ID ${locationId} no encontrada`);
+      throw new Error(`Locación con ID ${location_id} no encontrada`);
     }
 
     const category = await this.categoryRepository.findOne({
-      where: { categoryId },
+      where: { categoryId: category_id },
     });
     if (!category) {
-      throw new Error(`Categoria con ID ${locationId} no encontrada`);
+      throw new Error(`Categoria con ID ${category_id} no encontrada`);
     }
 
     const newEvent = this.eventRepository.create({
@@ -69,9 +74,9 @@ export class EventService {
       date,
       price,
       currency,
-      location,
+      location_id,
       imageUrl,
-      category,
+      category_id,
     });
 
     const savedEvent = await this.eventRepository.save(newEvent);
@@ -81,9 +86,12 @@ export class EventService {
   async deleteEvent(eventId: number) {
     const event = await this.getEventById(eventId);
     if (!event) {
-      throw new NotFoundException(`Evento con ID ${eventId} no encontrado`);
+      throw new NotFoundException(`Event with ID ${eventId} not found`);
     }
-    await this.eventRepository.delete(eventId);
-    return `Evento con ID ${eventId} eliminado con éxito`;
+    try {
+      await this.eventRepository.remove(event);
+    } catch (error) {
+      throw new BadRequestException('Failed to delete event');
+    }
   }
 }
