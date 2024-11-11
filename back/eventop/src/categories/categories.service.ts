@@ -54,5 +54,7 @@ export class CategoryService {
     } catch (error) {
       throw new BadRequestException('Failed to delete category');
     }
+    await this.categoryRepository.delete(categoryId);
+    return `Categoria con ID ${categoryId} eliminada con éxito!`;
   }
 }
