@@ -11,6 +11,6 @@ import { Location } from 'src/locations/entities/locations.entity';
 @Module({
   imports: [TypeOrmModule.forFeature([Event, Location, Category])],
   controllers: [EventController],
-  providers: [EventService],
+  providers: [EventService, CloudinaryService],
 })
 export class EventsModule {}

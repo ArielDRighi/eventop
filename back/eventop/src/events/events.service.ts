@@ -8,7 +8,6 @@ import { Event } from './entities/events.entity';
 import { Repository } from 'typeorm';
 import { Category } from 'src/categories/entities/categories.entity';
 import { Location } from 'src/locations/entities/locations.entity';
-import { CreateEventDto } from './dto/CreateEvent.dto';
 
 @Injectable()
 export class EventService {

@@ -45,7 +45,7 @@ export class CreateEventDto {
   })
   @IsNumber()
   @IsNotEmpty()
-  category: number;
+  category_id: number;
 
   @ApiProperty({
     type: Number,
@@ -54,7 +54,7 @@ export class CreateEventDto {
   })
   @IsNumber()
   @IsNotEmpty()
-  location: number;
+  location_id: number;
 
   @IsString()
   @IsNotEmpty()
