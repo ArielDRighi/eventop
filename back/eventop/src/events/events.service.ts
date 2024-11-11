@@ -79,7 +79,11 @@ export class EventService {
     });
 
     const savedEvent = await this.eventRepository.save(newEvent);
-    return savedEvent;
+    const eventWithRelations = await this.eventRepository.findOne({
+      where: { eventId: newEvent.eventId },
+      relations: ['location_id', 'category_id'],
+    });
+    return eventWithRelations;
   }
 
   async deleteEvent(eventId: number) {
