@@ -1,4 +1,6 @@
 import type { Config } from "tailwindcss";
+import daisyui from "daisyui";
+import flowbite from "flowbite/plugin";
 
 const config: Config = {
   content: [
@@ -15,6 +17,6 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [daisyui,flowbite],
 };
 export default config;
