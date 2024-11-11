@@ -1,3 +1,5 @@
+"use client"
+
 import React, { useState } from "react";
 import { createEvent } from "@/helpers/events.helper";
 import { IEventsCreate } from "@/interfaces/IEventos";

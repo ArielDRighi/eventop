@@ -1,19 +1,22 @@
-
 "use client"
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Login } from '@/views/Login/Login';
 import  Register  from '@/views/Register/Register';
 import { ToggleView } from '@/components/ToggleView';
 
 const Page: React.FC = () => {
-    
-  const accesToken = localStorage.getItem('accesToken')
-  if (accesToken) {window.location.href = "/micuenta/dashboard"}
-  else {
   const [activeView, setActiveView] = useState<string>('Login');
-   
+
+  // Verificar el token y redireccionar en un efecto secundario
+  useEffect(() => {
+    const accesToken = localStorage.getItem('acces_token');
+    if (accesToken) {
+      window.location.href = "/micuenta/dashboard";
+    }
+  }, []); // Solo se ejecutará una vez en el montaje del componente
+
   const views: { [key: string]: React.ReactNode } = {
-  Login: <Login />,
+    Login: <Login />,
     Register: <Register />,
   };
 
@@ -23,7 +26,6 @@ const Page: React.FC = () => {
       {views[activeView]}
     </>
   );
-}
 };
 
 export default Page;

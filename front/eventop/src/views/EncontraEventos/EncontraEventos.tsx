@@ -26,7 +26,7 @@ export const EncontraEventos =  () => {
   });
 
   return (
-    <section className="w-full lg:mx-w-6xl py-8">
+    <section className="w-full lg:mx-w-6xl py-8 bg-gray-900">
       <div className="w-full lg:max-w-6xl mx-auto mb-6">
         <h1 className="text-3xl font-bold py-4 px-2 text-start">
           Encuentra Eventos

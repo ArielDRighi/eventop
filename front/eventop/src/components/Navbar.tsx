@@ -1,45 +1,63 @@
 import Link from "next/link";
 import React from "react";
 
-export const Navbar = async () => {
-
+const NavBarUsers = () => {
   return (
-    <nav className="flex justify-between items-center w-full lg:max-w-6xl mx-auto py-4 md:py-8 ">
-      <div>
-        <h3 className="text-3xl">
-          Even<span className="font-bold">Top</span>
-        </h3>
-      </div>
-      <div className="w-2/3 mx-auto">
-        <div className="flex flex-row text-md gap-4">
-          <Link
-            href={"/"}
-            className="cursor-pointer  hover:border-b-blue-500 hover:border-b"
-          >
-            Inicio
-          </Link>
-          <Link
-            href={"/events"}
-            className="cursor-pointer  hover:border-b-blue-500 hover:border-b"
-          >
-            Encuentra Eventos
-          </Link>
-          <Link
-            href={"/events"}
-            className="cursor-pointer  hover:border-b-blue-500 hover:border-b"
-          >
-            Centro de ayuda
-          </Link>
-        </div>
-      </div>
-      <div className="flex flex-row items-center gap-2">
-        <Link
-          href={"/micuenta"}  
-          className="py-2 sm:py-3 px-4 rounded-lg bg-slate-50 border border-blue-600 text-blue-500 hover:bg-blue-600 hover:text-slate-50 transition ease-in-out font-bold text-sm"
-        >
-          Mi Cuenta
+    <div className="navbar bg-gray-900 text-white">
+      <div className="navbar-start">
+        <Link href={"/"} className="text-xl font-bold">
+          <span className="text-purple-500">E</span>ven
+          <span className="text-purple-500">Top</span>
         </Link>
       </div>
-    </nav>
+      <div className="navbar-center text-sm hidden lg:flex">
+        <ul className="menu menu-horizontal px-1">
+          <li>
+            <Link href={"/"}>
+              <button>Inicio</button>
+            </Link>
+          </li>
+          <li>
+            <Link href={"/events"}>
+              <button>Encuentra Eventos</button>
+            </Link>
+          </li>
+          <li>
+            <Link href={"#"}>
+              <button>Precios</button>
+            </Link>
+          </li>
+          <li>
+            <Link href={"/admin"}>
+              <button>Admin</button>
+            </Link>
+          </li>
+          <li>
+            <details>
+              <summary>Argentina | ES</summary>
+              <ul className="p-2">
+                <li>
+                  <a>Ingles</a>
+                </li>
+                <li>
+                  <a>Italiano</a>
+                </li>
+                <li>
+                  <a>Portugues</a>
+                </li>
+              </ul>
+            </details>
+          </li>
+        </ul>
+      </div>
+      <div className="navbar-end">
+        {/* <button className="btn bg-purple-500 text-white mx-3">
+          <Link href={"../views/Register"}>Registrarse</Link> 
+        </button> */}
+        <button  className="btn bg-purple-500 text-white hover:bg-purple-600"> <Link href={"/micuenta"}>Mi Cuenta</Link></button>
+      </div>
+    </div>
   );
 };
+
+export default NavBarUsers;

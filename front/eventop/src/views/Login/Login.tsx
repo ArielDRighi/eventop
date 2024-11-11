@@ -70,10 +70,10 @@ export const Login = () => {
 
       console.log(response);
 
-      const { token, user } = response;
+      const { acces_token } = response;
 
       // Almacenar token y datos de usuario en localStorage
-      localStorage.setItem("userSession", JSON.stringify({ token, user }));
+      localStorage.setItem("userSession", JSON.stringify({ acces_token }));
 
       // Pop-up de éxito
       Swal.fire({
