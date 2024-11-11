@@ -49,7 +49,7 @@ export class CreateEventDto {
 
   @ApiProperty({
     type: Number,
-    description: 'The category of the event',
+    description: 'The location of the event',
     required: true,
   })
   @IsNumber()
