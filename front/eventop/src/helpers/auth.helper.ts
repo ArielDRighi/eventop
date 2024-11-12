@@ -5,22 +5,18 @@ import Swal from "sweetalert2";
 const APIURL = process.env.NEXT_PUBLIC_API_URL;
 
 export const register = async (userData: IRegisterProps) => {
-  const dataToSend = {
-    ...userData, // Spread de los datos existentes
-    role: 0, // Agregar la propiedad 'role' con valor 0
-  };
   try {
-   const response = await fetch(`${APIURL}/auth/signup`, {
+    const response = await fetch(`${APIURL}/auth/signup`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
       },
-      body: JSON.stringify(dataToSend),
-      mode: "no-cors"
+      body: JSON.stringify(userData),
     });
-    if (response.ok) return response.json() 
-      else throw new Error("Fallo el registro")
-     
+    if (!response.ok) {
+      console.log("Error en la respuesta del backend:", response.status, await response.text());
+      throw new Error("Fallo el registro");
+    }
   } catch (error: any) {
     throw new Error(error);
   }
@@ -36,7 +32,7 @@ export const login = async (userData: ILoginProps) => {
       body: JSON.stringify(userData),
     });
     const res = await response.json();
-    console.log(res)
+    console.log(res);
     if (response.status === 400) {
       Swal.fire({
         title: res.message,

@@ -10,6 +10,7 @@ export const Events: IEventos[] = [
       currency: "pesos",
       locationId: 1,
       categoryId: 1,
+    
     },
     {
       eventId: 2,

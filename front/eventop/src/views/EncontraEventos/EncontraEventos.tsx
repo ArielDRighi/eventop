@@ -4,6 +4,7 @@ import Categorias from "@/helpers/arrayCategorias";
 import Ubicaciones from "@/helpers/arrayUbicaciones";
 import Events from "@/helpers/arrayEventos";
 import React, { useState } from "react";
+import SideBar from "@/components/SideBar";
 
 export const EncontraEventos = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -20,9 +21,10 @@ export const EncontraEventos = () => {
   });
 
   return (
-    <section className="w-full lg:mx-w-6xl py-8">
+    <section className="bg-gray-900 text-gray-800 w-full lg:mx-w-6xl py-8">
+      <SideBar/>
       <div className="w-full lg:max-w-6xl mx-auto mb-6">
-        <h1 className="text-3xl font-bold py-4 px-2 text-start">
+        <h1 className="text-3xl text-white font-bold py-4 px-2 text-start">
           Encuentra Eventos
         </h1>
       </div>

@@ -1,45 +1,83 @@
-import Link from "next/link";
-import React from "react";
+"use client";
 
-export const Navbar = async () => {
+import { getRoleFromToken } from "@/helpers/getRoleFromToken";
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
+
+const NavBar = () => {
+  const [isAdmin, setIsAdmin] = useState<boolean | undefined>(false);
+
+  useEffect(() => {
+    const role = getRoleFromToken();
+    if (role) {
+      console.log(role);
+      if (role === "guest") {
+        setIsAdmin(false);
+      } else {
+        setIsAdmin(true);
+      }
+    }
+  }, [isAdmin]);
+
 
   return (
-    <nav className="flex justify-between items-center w-full lg:max-w-6xl mx-auto py-4 md:py-8 ">
-      <div>
-        <h3 className="text-3xl">
-          Even<span className="font-bold">Top</span>
-        </h3>
+    <div className="navbar bg-gray-900 text-white">
+      <div className="navbar-start">
+        <Link href={"/"} className="text-xl font-bold">
+          <span className="text-purple-500">E</span>ven
+          <span className="text-purple-500">Top</span>
+        </Link>
       </div>
-      <div className="w-2/3 mx-auto">
-        <div className="flex flex-row text-md gap-4">
-          <Link
-            href={"/"}
-            className="cursor-pointer  hover:border-b-blue-500 hover:border-b"
-          >
-            Inicio
-          </Link>
-          <Link
-            href={"/events"}
-            className="cursor-pointer  hover:border-b-blue-500 hover:border-b"
-          >
-            Encuentra Eventos
-          </Link>
-          <Link
-            href={"/events"}
-            className="cursor-pointer  hover:border-b-blue-500 hover:border-b"
-          >
-            Centro de ayuda
-          </Link>
-        </div>
+      <div className="navbar-center text-sm hidden lg:flex">
+        <ul className="menu menu-horizontal px-1">
+          <li>
+            <Link href={"/"}>
+              <button>Inicio</button>
+            </Link>
+          </li>
+          <li>
+            <Link href={"/events"}>
+              Encuentra Eventos
+            </Link>
+          </li>
+          <li>
+            <Link href={"#"}>
+              <button>Precios</button>
+            </Link>
+          </li>
+          {/* Renderiza la opción de Admin solo si el usuario es admin */}
+          {isAdmin && (
+            <li>
+              <Link href={"/admin"}>
+                Admin
+              </Link>
+            </li>
+          )}
+          <li>
+            <details>
+              <summary>Argentina | ES</summary>
+              <ul className="p-2">
+                <li>
+                  <a>Inglés</a>
+                </li>
+                <li>
+                  <a>Italiano</a>
+                </li>
+                <li>
+                  <a>Portugués</a>
+                </li>
+              </ul>
+            </details>
+          </li>
+        </ul>
       </div>
-      <div className="flex flex-row items-center gap-2">
-        <Link
-          href={"/micuenta"}  
-          className="py-2 sm:py-3 px-4 rounded-lg bg-slate-50 border border-blue-600 text-blue-500 hover:bg-blue-600 hover:text-slate-50 transition ease-in-out font-bold text-sm"
-        >
+      <div className="navbar-end">
+        <Link className="btn bg-purple-500 text-white hover:bg-purple-600" href={"/micuenta"}>
           Mi Cuenta
         </Link>
       </div>
-    </nav>
+    </div>
   );
 };
+
+export default NavBar;

@@ -1,6 +1,4 @@
-import Search from "@/app/Components/Search";
-
-
+import Search from "../../../components/Search";
 
 const EventsPage = () => {
     return (
