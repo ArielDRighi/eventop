@@ -5,6 +5,7 @@ import validateLoginForm from "@/helpers/validateLoginForm";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 import { login } from "@/helpers/auth.helper";
+import {signIn} from 'next-auth/react'
 
 
 export const Login = () => {
@@ -192,6 +193,14 @@ export const Login = () => {
                 </button>
               </div>
             </form>
+            <div className="flex items-end justify-end mt-4">
+            <button
+                  className="flex  items-center justify-center font-bold rounded-xl   bg-purple-600 px-4 py-3 text-sm text-white duration-200 hover:bg-purple-700"
+                 onClick={() => signIn()}
+                >
+                 Inciar sesion con Google
+                </button>
+            </div>
           </div>
         </div>
       </div>
