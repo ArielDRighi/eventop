@@ -1,14 +1,17 @@
-import { IEventsCreate } from "@/interfaces/IEventos";
+import { IEvents, IEventsCreate } from "@/interfaces/IEventos";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 
 const APIURL = process.env.NEXT_PUBLIC_API_URL;
 
-export const createEvent = async (eventData: IEventsCreate) => {
+export const createEvent = async (eventData: IEventsCreate, token: any) => {
   try {
+     const { access_token } = token
+    console.log(access_token)
     const response = await fetch(`${APIURL}/events/create`, {
       method: "POST",
       headers: {
+        'Authorization': `Bearer ${access_token}`,
         "Content-type": "application/json",
       },
       body: JSON.stringify(eventData),
@@ -34,26 +37,26 @@ export const createEvent = async (eventData: IEventsCreate) => {
   }
 };
 
-export const getAllEvents = () => {
+export const useGetAllEvents  = async () => {
 
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  useEffect(() => {
+ useEffect(() => {
     (async () => {
       try {
         const res = await fetch(`${APIURL}/events`, {
-            method: "GET"
-        });
-        const data = await res.json();
-        setResult(data);
+          method: "GET"
+        })
+        const data = await res.json()
+         setResult(data);
         setLoading(false);
       } catch (error: any) {
         setError(error);
       }
     })();
   }, []);
-
+  
   return { result, loading, error };
 };

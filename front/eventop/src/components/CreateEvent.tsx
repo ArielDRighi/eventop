@@ -1,126 +1,153 @@
-"use client"
+"use client";
 
 import React, { useState } from "react";
-import { createEvent } from "@/helpers/events.helper";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { IEventsCreate } from "@/interfaces/IEventos";
+import { createEvent } from "@/helpers/events.helper";
 
-export const CreateEvent = () => {
-  const [eventData, setEventData] = useState<IEventsCreate>({
-    name: "",
-    description: "",
-    date: "",
-    price: 0,
-    currency: "",
-    imagenURl: ""
-  });
+interface IFormInput extends Omit<IEventsCreate, "date" | "image"> {
+  date: string;
+  image: File | string;
+}
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = event.target;
+const EventForm: React.FC = () => {
+  const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
+  const [image, setImage] = useState<File | null>(null);
 
-    setEventData({
-      ...eventData,
-      [name]: name === "price" ? parseFloat(value) : value, // Asegura que el precio sea numérico
-    });
+  // Función para manejar el envío del formulario
+  const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+    const token = JSON.parse(localStorage.getItem('access_token') || 'null');
+    if (!token) {
+      throw new Error('No autorizado. El token de autenticación no está presente.');
+    }
+
+    // Formatear los datos antes de enviarlos
+    const formattedData: IEventsCreate = {
+      ...data,
+      date: new Date(data.date), // Convertir `date` a una instancia de `Date`
+      image: image ? URL.createObjectURL(image) : '' // Usar una URL de objeto o una cadena vacía si no hay imagen
+    };
+
+    try {
+      console.log(formattedData)
+      const response = await createEvent(formattedData, token);
+      console.log(response);
+    } catch (error) {
+      console.error('Error al crear el evento:', error);
+      throw error;
+    }
   };
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    const response = await createEvent(eventData);
-    console.log(response)
-    
-    return response
-
+  // Función para manejar la subida de la imagen
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+    setImage(e.target.files[0]);
+    }
   };
 
   return (
-    <section className="w-full lg:max-w-6xl py-8 mx-auto">
-      <h2 className="text-2xl font-bold mb-4">Crear Nuevo Evento</h2>
-      <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md">
-        <div className="mb-4">
-          <label htmlFor="name" className="block text-gray-700 font-semibold mb-2">Título del evento</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            className="w-full p-2 border rounded-md"
-            placeholder="Título"
-            value={eventData.name}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="description" className="block text-gray-700 font-semibold mb-2">Descripción</label>
-          <textarea
-            id="description"
-            name="description"
-            className="w-full p-2 border rounded-md"
-            placeholder="Descripción"
-            value={eventData.description}
-            onChange={handleChange}
-            required
-          ></textarea>
-        </div>
-        <div className="mb-4">
-          <label htmlFor="date" className="block text-gray-700 font-semibold mb-2">Fecha</label>
-          <input
-            type="date"
-            id="date"
-            name="date"
-            className="w-full p-2 border rounded-md"
-            value={eventData.date}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="price" className="block text-gray-700 font-semibold mb-2">Precio</label>
-          <input
-            type="number"
-            id="price"
-            name="price"
-            className="w-full p-2 border rounded-md"
-            placeholder="Precio"
-            value={eventData.price}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="currency" className="block text-gray-700 font-semibold mb-2">Moneda</label>
-          <select
-            id="currency"
-            name="currency"
-            className="w-full p-2 border rounded-md"
-            value={eventData.currency}
-            onChange={handleChange}
-            required
-          >
-            <option value="">Selecciona una moneda</option>
-            <option value="USD">USD</option>
-            <option value="EUR">EUR</option>
-            <option value="MXN">MXN</option>
-            {/* Agrega más opciones según sea necesario */}
-          </select>
-        </div>
-        <div className="mb-4">
-          <label htmlFor="imagenURl" className="block text-gray-700 font-semibold mb-2">URL de la imagen</label>
-          <input
-            type="text"
-            id="imagenURl"
-            name="imagenURl"
-            className="w-full p-2 border rounded-md"
-            placeholder="URL de la imagen"
-            value={eventData.imagenURl}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded-md" >Crear Evento</button>
-      </form>
-    </section>
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 p-4 border rounded-lg shadow-lg max-w-3xl mx-auto">
+      <h1 className="text-2xl font-bold mb-4 text-slate-200">Crear Evento</h1>
+
+      {/* Nombre */}
+      <div>
+        <label htmlFor="name" className="block text-sm font-semibold text-slate-200">Nombre</label>
+        <input
+          id="name"
+          type="text"
+          {...register("name", { required: "El nombre es obligatorio" })}
+          className="mt-1 p-2 border w-full rounded-md"
+        />
+        {errors.name && <span className="text-red-500 text-sm">{errors.name.message}</span>}
+      </div>
+
+      {/* Descripción */}
+      <div>
+        <label htmlFor="description" className="block text-sm font-semibold text-slate-200">Descripción</label>
+        <textarea
+          id="description"
+          {...register("description", { required: "La descripción es obligatoria" })}
+          className="mt-1 p-2 border w-full rounded-md"
+        />
+        {errors.description && <span className="text-red-500 text-sm">{errors.description.message}</span>}
+      </div>
+
+      {/* Fecha */}
+      <div>
+        <label htmlFor="date" className="block text-sm font-semibold text-slate-200">Fecha</label>
+        <input
+          id="date"
+          type="date"
+          {...register("date", { required: "La fecha es obligatoria" })}
+          className="mt-1 p-2 border w-full rounded-md"
+        />
+        {errors.date && <span className="text-red-500 text-sm">{errors.date.message}</span>}
+      </div>
+
+      {/* Precio */}
+      <div>
+        <label htmlFor="price" className="block text-sm font-semibold text-slate-200">Precio</label>
+        <input
+          id="price"
+          type="number"
+          step="0.01"
+          {...register("price", { required: "El precio es obligatorio", valueAsNumber: true })}
+          className="mt-1 p-2 border w-full rounded-md"
+        />
+        {errors.price && <span className="text-red-500 text-sm">{errors.price.message}</span>}
+      </div>
+
+      {/* Categoría */}
+      <div>
+        <label htmlFor="category_id" className="block text-sm font-semibold text-slate-200">Categoría</label>
+        <input
+          id="category_id"
+          type="number"
+          {...register("category_id", { required: "La categoría es obligatoria", valueAsNumber: true })}
+          className="mt-1 p-2 border w-full rounded-md"
+        />
+        {errors.category_id && <span className="text-red-500 text-sm">{errors.category_id.message}</span>}
+      </div>
+
+      {/* Ubicación */}
+      <div>
+        <label htmlFor="location_id" className="block text-sm font-semibold text-slate-200">Ubicación</label>
+        <input
+          id="location_id"
+          type="number"
+          {...register("location_id", { required: "La ubicación es obligatoria", valueAsNumber: true })}
+          className="mt-1 p-2 border w-full rounded-md"
+        />
+        {errors.location_id && <span className="text-red-500 text-sm">{errors.location_id.message}</span>}
+      </div>
+
+      {/* Moneda */}
+      <div>
+        <label htmlFor="currency" className="block text-sm font-semibold text-slate-200">Moneda</label>
+        <input
+          id="currency"
+          type="text"
+          {...register("currency", { required: "La moneda es obligatoria" })}
+          className="mt-1 p-2 border w-full rounded-md"
+        />
+        {errors.currency && <span className="text-red-500 text-sm">{errors.currency.message}</span>}
+      </div>
+
+      {/* Imagen */}
+      <div>
+        <label htmlFor="image" className="block text-sm font-semibold text-slate-200">Imagen</label>
+        <input
+          id="image"
+          type="file"
+          onChange={handleImageChange}
+          className="mt-1 p-2 border w-full rounded-md"
+        />
+        {image && <p className="text-sm text-slate-400">Imagen cargada: {image.name}</p>}
+      </div>
+
+      <button type="submit" className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-md">Crear Evento</button>
+    </form>
   );
 };
 
-export default CreateEvent
+export default EventForm;
