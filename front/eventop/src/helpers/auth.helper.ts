@@ -5,7 +5,6 @@ import Swal from "sweetalert2";
 const APIURL = process.env.NEXT_PUBLIC_API_URL;
 
 export const register = async (userData: IRegisterProps) => {
-
   try {
     const response = await fetch(`${APIURL}/auth/signup`, {
       method: "POST",
@@ -14,8 +13,10 @@ export const register = async (userData: IRegisterProps) => {
       },
       body: JSON.stringify(userData),
     });
-    if (response.ok) return response.json();
-    else throw new Error("Fallo el registro");
+    if (!response.ok) {
+      console.log("Error en la respuesta del backend:", response.status, await response.text());
+      throw new Error("Fallo el registro");
+    }
   } catch (error: any) {
     throw new Error(error);
   }
@@ -30,9 +31,9 @@ export const login = async (userData: ILoginProps) => {
       },
       body: JSON.stringify(userData),
     });
-
     const res = await response.json();
-    if (res.status === 400) {
+    console.log(res);
+    if (response.status === 400) {
       Swal.fire({
         title: res.message,
         icon: "error",
@@ -44,7 +45,7 @@ export const login = async (userData: ILoginProps) => {
         },
         buttonsStyling: false, // Necesario para desactivar los estilos por defecto de los botones
       });
-      return res
+      throw new Error(res.message);
     } else {
       return res;
     }

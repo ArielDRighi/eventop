@@ -1,7 +1,25 @@
-import Link from "next/link";
-import React from "react";
+"use client";
 
-const NavBarUsers = () => {
+import { getRoleFromToken } from "@/helpers/getRoleFromToken";
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
+
+const NavBar = () => {
+  const [isAdmin, setIsAdmin] = useState<boolean | undefined>(false);
+
+  useEffect(() => {
+    const role = getRoleFromToken();
+    if (role) {
+      console.log(role);
+      if (role === "guest") {
+        setIsAdmin(false);
+      } else {
+        setIsAdmin(true);
+      }
+    }
+  }, [isAdmin]);
+
+
   return (
     <div className="navbar bg-gray-900 text-white">
       <div className="navbar-start">
@@ -19,7 +37,7 @@ const NavBarUsers = () => {
           </li>
           <li>
             <Link href={"/events"}>
-              <button>Encuentra Eventos</button>
+              Encuentra Eventos
             </Link>
           </li>
           <li>
@@ -27,23 +45,26 @@ const NavBarUsers = () => {
               <button>Precios</button>
             </Link>
           </li>
-          <li>
-            <Link href={"/admin"}>
-              <button>Admin</button>
-            </Link>
-          </li>
+          {/* Renderiza la opción de Admin solo si el usuario es admin */}
+          {isAdmin && (
+            <li>
+              <Link href={"/admin"}>
+                Admin
+              </Link>
+            </li>
+          )}
           <li>
             <details>
               <summary>Argentina | ES</summary>
               <ul className="p-2">
                 <li>
-                  <a>Ingles</a>
+                  <a>Inglés</a>
                 </li>
                 <li>
                   <a>Italiano</a>
                 </li>
                 <li>
-                  <a>Portugues</a>
+                  <a>Portugués</a>
                 </li>
               </ul>
             </details>
@@ -51,13 +72,12 @@ const NavBarUsers = () => {
         </ul>
       </div>
       <div className="navbar-end">
-        {/* <button className="btn bg-purple-500 text-white mx-3">
-          <Link href={"../views/Register"}>Registrarse</Link> 
-        </button> */}
-        <button  className="btn bg-purple-500 text-white hover:bg-purple-600"> <Link href={"/micuenta"}>Mi Cuenta</Link></button>
+        <Link className="btn bg-purple-500 text-white hover:bg-purple-600" href={"/micuenta"}>
+          Mi Cuenta
+        </Link>
       </div>
     </div>
   );
 };
 
-export default NavBarUsers;
+export default NavBar;

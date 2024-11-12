@@ -9,6 +9,7 @@ const validateRegisterForm = (values: IRegisterProps): IRegisterErrors => {
     confirmPassword: "",
   };
 
+
   // Validación para el nombre (no vacío)
   if (!values.name.trim()) {
     errors.name = "Name is required.";
@@ -23,12 +24,17 @@ const validateRegisterForm = (values: IRegisterProps): IRegisterErrors => {
     errors.email = "Invalid email address.";
   }
 
+  
   // Validación para la contraseña
   if (!values.password.trim()) {
     errors.password = "Password is required.";
   } else if (values.password.length < 6) {
     errors.password = "Password must be at least 6 characters long.";
+  } else if (!/^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&()_+\-=\[\]{};':"\\|,.<>/?]).+$/.test(values.password)) {
+    errors.password = "Password must include at least one uppercase letter, one number, and one special character.";
   }
+  
+  
 
   // Validación para confirmar que las contraseñas coinciden
   if (!values.confirmPassword.trim()) {
@@ -36,6 +42,7 @@ const validateRegisterForm = (values: IRegisterProps): IRegisterErrors => {
   } else if (values.password !== values.confirmPassword) {
     errors.confirmPassword = "Passwords do not match.";
   }
+
 
   return errors;
 };

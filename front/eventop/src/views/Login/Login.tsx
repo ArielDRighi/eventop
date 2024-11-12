@@ -70,10 +70,11 @@ export const Login = () => {
 
       console.log(response);
 
-      const { acces_token } = response;
-
+      const { access_token } = response;
+      console.log(access_token);
+      
       // Almacenar token y datos de usuario en localStorage
-      localStorage.setItem("userSession", JSON.stringify({ acces_token }));
+      localStorage.setItem("access_token", JSON.stringify({ access_token }));
 
       // Pop-up de éxito
       Swal.fire({
@@ -115,7 +116,7 @@ export const Login = () => {
   }, [userData]);
 
   return (
-    <div className="bg-gray-900 text-white flex min-h-screen flex-col items-center pt-16 sm:justify-center sm:pt-0">
+    <div className="bg-gray-900 text-white flex  flex-col items-center pt-16 sm:justify-center sm:pt-0">
       <a href="#">
         <div className="text-foreground font-semibold text-2xl tracking-tighter mx-auto flex items-center gap-2">
           EvenTop
