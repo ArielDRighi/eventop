@@ -8,8 +8,8 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ValidationPipe());
 
+  app.enableCors();
 
-  app.enableCors()
   const config = new DocumentBuilder()
     .setTitle('Eventop')
     .setDescription('PF Soy Henry Grupo 1')
