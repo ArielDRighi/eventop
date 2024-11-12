@@ -23,7 +23,6 @@ import { AuthGuard } from '@nestjs/passport';
 import { RoleGuard } from '@app/auth/roles.guard';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { CloudinaryService } from './cloudinary.service';
-import { create } from 'domain';
 
 @ApiTags('events')
 @ApiBearerAuth('access-token')

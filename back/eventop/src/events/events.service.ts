@@ -11,6 +11,8 @@ import { CreateEventDto } from './dto/CreateEvent.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
 import { Category } from '@app/categories/entities/categories.entity';
 import { Location } from '@app/locations/entities/locations.entity';
+import { Preference } from 'mercadopago';
+import { mercadopago } from '@app/config/mercadopago.config';
 
 @Injectable()
 export class EventService {
@@ -128,5 +130,30 @@ export class EventService {
     } catch (error) {
       throw new HttpException('Failed to delete event', HttpStatus.BAD_REQUEST);
     }
+  }
+
+  async createPaymentPreference(event: Event): Promise<String> {
+    // Crear uan preferencia de pago con los detalles del evento usando la configuración de Mercado Pago
+    const preference = await new Preference(mercadopago).create({
+      body: {
+        // Define el producto a vender, en este caso un evento
+        items: [
+          {
+            id: `event-${event.eventId}`, // Identificador basado en el EventId
+            title: event.name,
+            unit_price: event.price,
+            quantity: 1, // Cantidad(En este caso, 1)
+            currency_id: event.currency, // Moneda como, "USD" o "ARS"
+          },
+        ],
+        // Agrega metadatos opcionales que pueden ser útiles para el seguimiento del evento
+        metadata: {
+          eventId: event.eventId,
+          name: event.name,
+        },
+      },
+    });
+    // retorna el enlace de inicio de pago de Mercado Pago para el cliente
+    return preference.init_point;
   }
 }

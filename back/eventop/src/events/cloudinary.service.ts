@@ -1,6 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { v2 as cloudinary } from 'cloudinary';
 import * as toStream from 'buffer-to-stream';
+import { Preference } from 'mercadopago';
+import { mercadopago } from '@app/config/mercadopago.config';
+import { Event } from './entities/events.entity';
 
 @Injectable()
 export class CloudinaryService {
