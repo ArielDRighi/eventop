@@ -7,7 +7,7 @@ const LayoutOne = () => {
       <div>
         <section>
           <section className="sticky">
-            <div className="max-w-lg px-4 sm:pt-24 pt-12 sm:pb-8 mx-auto text-left md:max-w-none md:text-center">
+            <div className="max-w-lg px-4 sm:pt-24 pt-12 sm:pb-8 mx-auto text-left lg:max-w-6xl md:text-center">
               <h1 className="font-extrabold leading-10 tracking-tight text-left text-white  sm:leading-none text-5xl sm:text-5xl">
                 <span className="inline md:block">Gestion de Entradas en </span>
                 <span className="relative mt-2 bg-clip-text text-purple-500 md:inline-block">

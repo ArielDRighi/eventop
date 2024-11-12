@@ -29,10 +29,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} bg-gray-900 flex flex-col justify-between h-screen`}
+        className={`${geistSans.variable} ${geistMono.variable} bg-gray-900 flex flex-col justify-between h-screen w-screen`}
       >
-        <NavBarUsers/>
-        {/* <SideBar/> */}
+        <NavBar/>
         {children}
         <Footer/>
       </body>

@@ -20,7 +20,7 @@ const NavBar = () => {
   }, [isAdmin]);
 
   return (
-    <div className="navbar bg-gray-900 text-white">
+    <nav className="navbar lg:max-w-6xl mx-auto bg-gray-900 text-white">
       <div className="navbar-start">
         <Link href={"/"} className="text-xl font-bold">
           <span className="text-purple-500">E</span>ven
@@ -74,7 +74,7 @@ const NavBar = () => {
           Mi Cuenta
         </Link>
       </div>
-    </div>
+    </nav>
   );
 };
 
