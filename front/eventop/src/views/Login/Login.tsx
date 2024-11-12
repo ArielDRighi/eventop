@@ -116,7 +116,7 @@ export const Login = () => {
   }, [userData]);
 
   return (
-    <div className="bg-gray-900 text-white flex  flex-col items-center pt-16 sm:justify-center sm:pt-0">
+    <div className="bg-gray-900  text-white flex  flex-col items-center pt-16 sm:justify-center sm:pt-0">
       <a href="#">
         <div className="text-foreground font-semibold text-2xl tracking-tighter mx-auto flex items-center gap-2">
           EvenTop

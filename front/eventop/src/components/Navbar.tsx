@@ -19,7 +19,6 @@ const NavBar = () => {
     }
   }, [isAdmin]);
 
-
   return (
     <div className="navbar bg-gray-900 text-white">
       <div className="navbar-start">
@@ -36,21 +35,17 @@ const NavBar = () => {
             </Link>
           </li>
           <li>
-            <Link href={"/events"}>
-              Encuentra Eventos
-            </Link>
+            <Link href={"/events"}>Encuentra Eventos</Link>
           </li>
           <li>
             <Link href={"#"}>
               <button>Precios</button>
             </Link>
           </li>
-          {/* Renderiza la opción de Admin solo si el usuario es admin */}
+          
           {isAdmin && (
             <li>
-              <Link href={"/admin"}>
-                Admin
-              </Link>
+              <Link href={"/admin"}>Admin</Link>
             </li>
           )}
           <li>
@@ -72,7 +67,10 @@ const NavBar = () => {
         </ul>
       </div>
       <div className="navbar-end">
-        <Link className="btn bg-purple-500 text-white hover:bg-purple-600" href={"/micuenta"}>
+        <Link
+          className="btn bg-purple-500 text-white hover:bg-purple-600"
+          href={"/micuenta"}
+        >
           Mi Cuenta
         </Link>
       </div>
