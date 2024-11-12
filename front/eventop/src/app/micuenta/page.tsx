@@ -9,7 +9,7 @@ const Page: React.FC = () => {
 
   // Verificar el token y redireccionar en un efecto secundario
   useEffect(() => {
-    const accesToken = localStorage.getItem('acces_token');
+    const accesToken = localStorage.getItem('access_token');
     if (accesToken) {
       window.location.href = "/micuenta/dashboard";
     }

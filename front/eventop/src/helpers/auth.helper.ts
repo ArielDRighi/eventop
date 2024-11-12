@@ -13,8 +13,10 @@ export const register = async (userData: IRegisterProps) => {
       },
       body: JSON.stringify(userData),
     });
-    if (response.ok) return response.json();
-    else throw new Error("Fallo el registro");
+    if (!response.ok) {
+      console.log("Error en la respuesta del backend:", response.status, await response.text());
+      throw new Error("Fallo el registro");
+    }
   } catch (error: any) {
     throw new Error(error);
   }
