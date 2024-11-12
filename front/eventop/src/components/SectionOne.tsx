@@ -7,7 +7,7 @@ const LayoutOne = () => {
       <div>
         <section>
           <section className="sticky">
-            <div className="max-w-lg px-4 sm:pt-24 pt-12 sm:pb-8 mx-auto text-left md:max-w-none md:text-center">
+            <div className="max-w-lg px-4 sm:pt-24 pt-12 sm:pb-8 mx-auto text-left lg:max-w-6xl md:text-center">
               <h1 className="font-extrabold leading-10 tracking-tight text-left text-white  sm:leading-none text-5xl sm:text-5xl">
                 <span className="inline md:block">Gestion de Entradas en </span>
                 <span className="relative mt-2 bg-clip-text text-purple-500 md:inline-block">
@@ -22,8 +22,8 @@ const LayoutOne = () => {
               </h1>
             </div>
 
-            <div className="max-w-lg px-4 pb-24 mx-auto text-left md:max-w-none md:text-center">
-              <div className="text-center py-4 space-x-4">
+            <div className="max-w-lg px-4 pb-2 mx-auto text-left md:max-w-6xl md:text-center lg:text-start">
+              <div className="lg:text-start text-center py-4 space-x-4">
                 <button className="backdrop-blur-sm transition duration-500 ease-in-out bg-purple-500 border border-[#E2E8F0] translate-y-1 text-white hover:bg-purple-800 text-lg font-semibold py-3 px-6 rounded-3xl inline-flex items-center">
                   <span>Crear Cuenta</span>
                 </button>
