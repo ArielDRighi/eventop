@@ -7,12 +7,12 @@ import BlogTwo from '@/components/BlogTwo'
 
 const Home = () => {
   return (
-    <div className='bg-gray-900'>
-      <SectionOne/>
+    <section className='bg-gray-900 '>
+      <SectionOne />
       <Cards/>
       <BlogTwo/>
       <Blog/>
-    </div>
+    </section>
   )
 }
 
