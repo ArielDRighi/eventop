@@ -1,12 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { MercadoPagoConfig, Preference } from 'mercadopago';
+import { Preference } from 'mercadopago';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Event } from './entities/events.entity';
 import { EventService } from './events.service';
-
-// Agrega credenciales
-const client = new MercadoPagoConfig({ accessToken: 'YOUR_ACCESS_TOKEN' });
+import { client } from '../config/mercadopago.config';
 
 @Injectable()
 export class PaymentService {
