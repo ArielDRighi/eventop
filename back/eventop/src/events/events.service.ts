@@ -48,7 +48,7 @@ export class EventService {
   }
 
   async createEvent(createEventDto): Promise<Event> {
-    const {
+    let {
       name,
       description,
       date,
@@ -104,7 +104,9 @@ export class EventService {
         HttpStatus.NOT_FOUND,
       );
     }
-
+    if (typeof updateEventDto.date === 'string') {
+      updateEventDto.date = new Date(updateEventDto.date);
+    }
     Object.assign(event, updateEventDto);
 
     try {
