@@ -13,7 +13,7 @@ const config = {
   database: process.env.DB_NAME,
   synchronize: true,
   autoLoadEntities: true,
-  logging: false,
+  logging: true,
   dropSchema: false,
   entities: [__dirname + '/../**/*.entity{.ts,.js}'],
   migrations: ['dist/migrations/*{.ts,.js}'],
