@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import PaymentButton from "./PaymentButton";
+import { Wallet } from "@mercadopago/sdk-react";
 
 const App: React.FC = () => {
   const [preferenceId, setPreferenceId] = useState<string | null>(null);
@@ -21,7 +21,17 @@ const App: React.FC = () => {
     createPreference();
   }, [eventId]);
 
-  return <div>{preferenceId ? <PaymentButton preferenceId={preferenceId} /> : <p>Loading...</p>}</div>;
+  return (
+    <div className="bg-gray-900">
+      <div id="wallet_container">
+        {preferenceId ? (
+          <Wallet initialization={{ preferenceId }} customization={{ texts: { valueProp: "smart_option" } }} />
+        ) : (
+          <p>Loading...</p>
+        )}
+      </div>
+    </div>
+  );
 };
 
 export default App;

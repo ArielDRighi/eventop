@@ -27,12 +27,19 @@ export class PaymentService {
         body: {
           items: [
             {
-              title: event.name,
-              description: event.description,
+              title: 'Evento de prueba',
+              description: 'Una prueba',
               quantity: 1,
-              unit_price: event.price,
-              id: event.eventId.toString(),
+              unit_price: 200,
+              id: '1',
             },
+            // {
+            //   // title: event.name,
+            //   // description: event.description,
+            //   // quantity: 1,
+            //   // unit_price: event.price,
+            //   // id: event.eventId.toString(),
+            // },
           ],
           payer: {
             email: 'payer_email@example.com', // Puedes obtener el email del comprador si está disponible

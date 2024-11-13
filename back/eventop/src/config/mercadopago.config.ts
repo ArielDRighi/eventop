@@ -1,5 +1,8 @@
 import { MercadoPagoConfig } from 'mercadopago';
+import { config as dotenvConfig } from 'dotenv';
+
+dotenvConfig();
 
 export const client = new MercadoPagoConfig({
-  accessToken: 'YOUR_ACCESS_TOKEN',
+  accessToken: process.env.MERCADOPAGO_ACCESS_TOKEN,
 });
