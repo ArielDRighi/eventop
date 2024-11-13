@@ -10,7 +10,7 @@ const Search = () => {
 
   return (
     <div>
-      <form className="max-w-lg mx-auto relative">
+      <form className="max-w-lg mt-10 mb-10 mx-auto relative">
         <div className="flex relative">
           <label className="mb-2 text-sm font-medium text-gray-900 sr-only ">
             Your Email

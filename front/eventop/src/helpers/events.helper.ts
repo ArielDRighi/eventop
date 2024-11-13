@@ -1,4 +1,4 @@
-import { IEvents, IEventsCreate } from "@/interfaces/IEventos";
+import {  IEventsCreate } from "@/interfaces/IEventos";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 
@@ -37,26 +37,33 @@ export const createEvent = async (eventData: IEventsCreate, token: any) => {
   }
 };
 
-export const useGetAllEvents  = async () => {
-
+export const useGetAllEvents = () => {
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
- useEffect(() => {
-    (async () => {
+  useEffect(() => {
+    const fetchData = async () => {
       try {
         const res = await fetch(`${APIURL}/events`, {
-          method: "GET"
-        })
-        const data = await res.json()
-         setResult(data);
-        setLoading(false);
+          method: "GET",
+        });
+        
+        if (!res.ok) {
+          throw new Error(`Error ${res.status}: No se pudo obtener los eventos`);
+        }
+        
+        const data = await res.json();
+        setResult(data);
       } catch (error: any) {
-        setError(error);
+        setError(error.message || "Error al obtener los datos");
+      } finally {
+        setLoading(false);
       }
-    })();
+    };
+
+    fetchData();
   }, []);
-  
+
   return { result, loading, error };
 };

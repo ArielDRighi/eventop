@@ -9,7 +9,7 @@ const Cards = () => {
           <h1 className="text-4xl sm:text-5xl md:text-3xl font-semibold text-purple-300 mb-4">
             Eventos Recientes
           </h1>
-          <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {arrayCards.map((event, index) => (
               <div key={index} className="bg-gray-900 shadow-lg rounded p-3">
                 <div className="group relative">

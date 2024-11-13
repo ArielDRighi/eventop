@@ -9,7 +9,7 @@ import { useGetAllLocations } from "@/helpers/location.helper";
 import { ICategory } from "@/interfaces/ICategoty";
 import { ILocation } from "@/interfaces/ILocations";
 import { ResponseTypeCategory, ResponseTypeLocation } from "@/interfaces/IResponse";
-
+import Image from "next/image";
 export const EncontraEventos = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [selectedLocation, setSelectedLocation] = useState<string>("");
@@ -27,6 +27,8 @@ export const EncontraEventos = () => {
       });
       if (res.ok) {
         const data = await res.json();
+        console.log(data);
+        
         return data;
       }
       throw new Error("Error al obtener los eventos.");
@@ -57,7 +59,7 @@ export const EncontraEventos = () => {
   }, [selectedCategory, selectedLocation, events]);
 
   return (
-    <section className="bg-gray-900 text-gray-800 py-8">
+    <section className="bg-gray-900  text-gray-900  py-8">
       <div className="w-full lg:max-w-6xl mx-auto mb-6">
         <h1 className="text-3xl text-white font-bold py-4 px-2">Encuentra Eventos</h1>
       </div>
@@ -119,6 +121,7 @@ export const EncontraEventos = () => {
      {filteredEvents.map((event: IEvents) => (
         <div key={event.eventId} className="bg-gray-900 shadow-lg rounded p-3 w-1/3 h-[200px]">
          <div className="group relative">
+          
            <img
              className="w-full md:w-72 block rounded"
              src={event.imageUrl}
