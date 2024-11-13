@@ -8,13 +8,8 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ValidationPipe());
 
+  app.enableCors();
 
-  app.enableCors({
-    origin: 'http://localhost:3001',
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true // Permitir que las solicitudes incluyan cookies
-  });
-  
   const config = new DocumentBuilder()
     .setTitle('Eventop')
     .setDescription('PF Soy Henry Grupo 1')
