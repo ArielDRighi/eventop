@@ -22,14 +22,12 @@ export class PaymentService {
 
   async createPreference(eventId: number) {
     const event = await this.eventService.getEventById(eventId);
-    console.log('Evento:', event);
 
     if (!event) {
       throw new NotFoundException(`Event with ID ${eventId} not found`);
     }
 
     const preference = new Preference(client);
-    console.log('Preference:', preference);
 
     try {
       const response = await preference.create({
@@ -54,7 +52,6 @@ export class PaymentService {
           auto_return: 'approved',
         },
       });
-      console.log('Response:', response);
       return response.id;
     } catch (error) {
       console.log('Error', error);

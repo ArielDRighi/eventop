@@ -3,6 +3,7 @@ import SectionOne from "../components/SectionOne";
 import Cards from "@/components/Cards";
 import Blog from "@/components/Blog";
 import BlogTwo from "@/components/BlogTwo";
+import App from "@/components/App";
 
 const Home = () => {
   return (
@@ -11,6 +12,7 @@ const Home = () => {
       <Cards />
       <BlogTwo />
       <Blog />
+      <App />
     </div>
   );
 };
