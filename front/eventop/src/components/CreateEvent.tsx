@@ -25,12 +25,12 @@ const EventForm: React.FC = () => {
     const formattedData: IEventsCreate = {
       ...data,
       date: new Date(data.date), // Convertir `date` a una instancia de `Date`
-      image: image ? URL.createObjectURL(image) : '' // Usar una URL de objeto o una cadena vacía si no hay imagen
     };
-
+ 
     try {
       console.log(formattedData)
-      const response = await createEvent(formattedData, token);
+      console.log(image)
+      const response = await createEvent(formattedData, token, image);
       console.log(response);
     } catch (error) {
       console.error('Error al crear el evento:', error);

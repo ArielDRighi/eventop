@@ -3,7 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import NavBar from "@/components/Navbar";
 import Footer from "../components/Footer";
-// import SideBar from "@/components/SideBar";
+import { UserProvider } from "@auth0/nextjs-auth0/client";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -28,13 +28,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} bg-gray-900 flex flex-col justify-between h-screen w-screen`}
-      >
-        <NavBar/>
-        {children}
-        <Footer/>
-      </body>
+      <UserProvider>
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} bg-gray-900 flex flex-col justify-between h-screen w-screen`}
+        >
+          <NavBar />
+          {children}
+          <Footer />
+        </body>
+      </UserProvider>
     </html>
   );
 }
