@@ -48,6 +48,17 @@ services:
       - eventop_network
     depends_on:
       - postgresdb  # Cambiado a postgresdb para coincidir con el nombre del servicio
+     
+  frontend:
+    build:
+      context: ../../front/eventop  # Asegúrate de que esta ruta apunte al directorio de tu frontend
+    container_name: frontend
+    ports:
+      - "80:80"  # Exponer el puerto 80 para acceder al frontend
+    networks:
+      - eventop_network  # Aseguramos que los contenedores estén en la misma red
+    depends_on:
+      - eventop  # El frontend depende de que el backend esté funcionando
 
 volumes:
   postgres-data:

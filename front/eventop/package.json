@@ -9,7 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@auth0/nextjs-auth0": "^3.5.0",
+    "@mercadopago/sdk-react": "^0.0.19",
+    "daisyui": "^4.12.14",
     "flowbite": "^2.5.2",
+    "jwt-decode": "^4.0.0",
     "lucide-react": "^0.454.0",
     "next": "^15.0.3",
     "next-auth": "^4.24.10",
