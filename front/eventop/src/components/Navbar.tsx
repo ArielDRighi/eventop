@@ -38,10 +38,11 @@ const NavBar = () => {
             <Link href={"/events"}>Encuentra Eventos</Link>
           </li>
           <li>
-            <Link href={"#"}>
-              <button>Precios</button>
+            <Link href={"/payments"}>
+              <button>Pagos</button>
             </Link>
           </li>
+          
           
           {isAdmin && (
             <li>

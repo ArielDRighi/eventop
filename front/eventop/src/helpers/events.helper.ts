@@ -1,4 +1,5 @@
-import {  IEventsCreate } from "@/interfaces/IEventos";
+import { IEventsCreate } from "@/interfaces/IEventos";
+import { IEvents } from "@/interfaces/IEventos";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 
@@ -6,12 +7,12 @@ const APIURL = process.env.NEXT_PUBLIC_API_URL;
 
 export const createEvent = async (eventData: IEventsCreate, token: any) => {
   try {
-     const { access_token } = token
-    console.log(access_token)
+    const { access_token } = token;
+    console.log(access_token);
     const response = await fetch(`${APIURL}/events/create`, {
       method: "POST",
       headers: {
-        'Authorization': `Bearer ${access_token}`,
+        Authorization: `Bearer ${access_token}`,
         "Content-type": "application/json",
       },
       body: JSON.stringify(eventData),
@@ -48,11 +49,13 @@ export const useGetAllEvents = () => {
         const res = await fetch(`${APIURL}/events`, {
           method: "GET",
         });
-        
+
         if (!res.ok) {
-          throw new Error(`Error ${res.status}: No se pudo obtener los eventos`);
+          throw new Error(
+            `Error ${res.status}: No se pudo obtener los eventos`
+          );
         }
-        
+
         const data = await res.json();
         setResult(data);
       } catch (error: any) {
@@ -66,4 +69,54 @@ export const useGetAllEvents = () => {
   }, []);
 
   return { result, loading, error };
+};
+
+export const useEventById = (id: string | number) => {
+  const [event, setEvent] = useState<IEvents | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchEvent = async () => {
+      if (!id) {
+        setError("Se requiere un ID de evento.");
+        setLoading(false);
+        return;
+      }
+
+      const numericId = Number(id);
+
+      if (isNaN(numericId) || numericId <= 0) {
+        setError("El ID del evento no es válido.");
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const res = await fetch(`${APIURL}/events/${numericId}`);
+        console.log(res);
+        
+        if (!res.ok) {
+        
+          if (res.status === 404) {
+            throw new Error("Evento no encontrado");
+          }
+          throw new Error(`Error al obtener el evento: ${res.statusText}`);
+        }
+        const data: IEvents = await res.json();
+        console.log('Evento obtenido:', data);
+        
+        setEvent(data);
+      } catch (error) {
+        console.error('Error en useEventById:', error);
+        setError(error instanceof Error ? error.message : "Error desconocido al obtener el evento");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchEvent();
+  }, [id]);
+
+  return { event, loading, error };
 };
