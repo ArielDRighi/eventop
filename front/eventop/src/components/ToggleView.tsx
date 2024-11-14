@@ -12,7 +12,7 @@ export const ToggleView: React.FC<ToggleViewProps> = ({
   views,
 }) => {
   return (
-    <div className="flex justify-center mb-6 mt-24  bg-gray-900">
+    <div className="flex justify-center mb-6 mt-24  bg-gray-900 text-white">
       {Object.keys(views).map((viewKey) => (
         <button
           key={viewKey}

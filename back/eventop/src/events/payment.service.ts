@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { MercadoPagoConfig, Preference } from 'mercadopago';
+import MercadoPagoConfig, { Preference } from 'mercadopago';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Event } from './entities/events.entity';
@@ -36,8 +36,8 @@ export class PaymentService {
         body: {
           items: [
             {
-              title: event.name,
-              description: event.description,
+              title: 'Evento de prueba',
+              description: 'Una prueba',
               quantity: 1,
               unit_price: 1500,
               id: event.eventId.toString(),

@@ -4,6 +4,7 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.1.5",
+    "@mercadopago/sdk-react": "^0.0.19",
     "jwt-decode": "^4.0.0",
     "sweetalert2": "^11.14.5"
   }
