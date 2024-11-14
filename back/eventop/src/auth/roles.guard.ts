@@ -29,7 +29,7 @@ export class RoleGuard implements CanActivate {
     const user = request.user;
 
     if (!user) {
-      throw new ForbiddenException('No tienes permiso para acceder');
+      throw new ForbiddenException('You do not have permission to access');
     }
 
     // Obtenemos los roles del usuario
@@ -37,7 +37,7 @@ export class RoleGuard implements CanActivate {
 
     // Verificamos si el usuario tiene roles asignados
     if (!userRoles) {
-      throw new ForbiddenException('No tienes permitido acceder');
+      throw new ForbiddenException('You do not have permission to access');
     }
 
     // Aca vemos si el rol del usuario está incluido en los roles requeridos
@@ -46,7 +46,7 @@ export class RoleGuard implements CanActivate {
       : requiredRoles.includes(userRoles);
 
     if (!hasRole) {
-      throw new ForbiddenException('No tienes permitido acceder');
+      throw new ForbiddenException('You do not have permission to access');
     }
 
     return true;

@@ -11,8 +11,6 @@ import { Repository } from 'typeorm';
 import { User } from './entities/users.entity';
 import { CreateUserDto } from 'src/auth/dto/createUser.dto';
 import { UpdateUserDto } from './dto/UpdateUser.dto';
-import { use } from 'passport';
-import { log } from 'console';
 
 @Injectable()
 export class UserService {
@@ -33,7 +31,7 @@ export class UserService {
       where: { email },
     });
     if (existingUser) {
-      throw new ConflictException('El email ya está registrado');
+      throw new ConflictException('The email is already registered');
     }
     try {
       const newUser = this.userRepository.create({
@@ -46,7 +44,7 @@ export class UserService {
       const { password: _, ...result } = savedUser;
       return result;
     } catch (error) {
-      throw new BadRequestException('Error al crear el usuario', error);
+      throw new BadRequestException('Failed to create User', error);
     }
   }
 
@@ -61,13 +59,13 @@ export class UserService {
     const user = await this.userRepository.findOne({ where: { userId } });
     if (!user) {
       throw new HttpException(
-        `Usuario con ID ${userId} inexistente`,
+        `User with ID ${userId} not found`,
         HttpStatus.NOT_FOUND,
       );
     }
     if (Object.keys(updateUserDto).length === 0) {
       throw new HttpException(
-        'No se proporcionaron datos para actualizar',
+        'No data provided for update',
         HttpStatus.BAD_REQUEST,
       );
     }
@@ -75,11 +73,8 @@ export class UserService {
     try {
       return await this.userRepository.save(user);
     } catch (error) {
-      console.log('error al guardar el usuario', error);
-      throw new HttpException(
-        'Fallo al actualizar el usuario',
-        HttpStatus.BAD_REQUEST,
-      );
+      console.log('Failed to update user', error);
+      throw new HttpException('Failed to update user', HttpStatus.BAD_REQUEST);
     }
   }
 }

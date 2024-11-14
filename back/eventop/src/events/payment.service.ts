@@ -27,6 +27,10 @@ export class PaymentService {
       throw new NotFoundException(`Event with ID ${eventId} not found`);
     }
 
+    const unitPrice = Number(event.price);
+    if (isNaN(unitPrice)) {
+      throw new Error('Event price is not a valid number');
+    }
     const preference = new Preference(client);
 
     try {
@@ -34,10 +38,10 @@ export class PaymentService {
         body: {
           items: [
             {
-              title: 'Evento de prueba',
-              description: 'Una prueba',
+              title: event.name,
+              description: event.description,
               quantity: 1,
-              unit_price: 1500,
+              unit_price: Number(event.price),
               id: event.eventId.toString(),
             },
           ],
@@ -55,7 +59,6 @@ export class PaymentService {
       return response.id;
     } catch (error) {
       console.log('Error', error);
-      console.log(error);
 
       throw error;
     }
