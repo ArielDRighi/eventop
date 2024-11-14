@@ -4,9 +4,13 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Event } from './entities/events.entity';
 import { EventService } from './events.service';
+import { Controller, Post, Body } from '@nestjs/common'; // Importa los decoradores necesarios
 
 // Agrega credenciales
-const client = new MercadoPagoConfig({ accessToken: 'YOUR_ACCESS_TOKEN' });
+const client = new MercadoPagoConfig({
+  accessToken:
+    'APP_USR-7919481759638533-111217-7dc46b6e24d13dd0582f26d3cba133d4-38184233',
+});
 
 @Injectable()
 export class PaymentService {
@@ -18,11 +22,14 @@ export class PaymentService {
 
   async createPreference(eventId: number) {
     const event = await this.eventService.getEventById(eventId);
+    console.log('Evento:', event);
+
     if (!event) {
       throw new NotFoundException(`Event with ID ${eventId} not found`);
     }
 
     const preference = new Preference(client);
+    console.log('Preference:', preference);
 
     try {
       const response = await preference.create({
@@ -32,7 +39,7 @@ export class PaymentService {
               title: event.name,
               description: event.description,
               quantity: 1,
-              unit_price: event.price,
+              unit_price: 1500,
               id: event.eventId.toString(),
             },
           ],
@@ -47,11 +54,26 @@ export class PaymentService {
           auto_return: 'approved',
         },
       });
-      console.log(response);
+      console.log('Response:', response);
       return response.id;
     } catch (error) {
-      console.error(error);
+      console.log('Error', error);
+      console.log(error);
+
       throw error;
     }
+  }
+}
+
+// Define un controlador para manejar la ruta
+@Controller('payment')
+export class PaymentController {
+  constructor(private readonly paymentService: PaymentService) {}
+
+  @Post('create_preference')
+  async createPreference(@Body('eventId') eventId: number) {
+    return {
+      preferenceId: await this.paymentService.createPreference(eventId),
+    };
   }
 }

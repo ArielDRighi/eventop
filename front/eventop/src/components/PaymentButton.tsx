@@ -13,12 +13,18 @@ const PaymentButton: React.FC<PaymentButtonProps> = ({ preferenceId }) => {
     script.onload = () => {
       interface MercadoPagoWindow extends Window {
         MercadoPago: new (publicKey: string, options: { locale: string }) => {
-          checkout: (options: { preference: { id: string }; render: { container: string; label: string } }) => void;
+          checkout: (options: {
+            preference: { id: string };
+            render: { container: string; label: string };
+          }) => void;
         };
       }
-      const mp = new (window as unknown as MercadoPagoWindow).MercadoPago("YOUR_PUBLIC_KEY", {
-        locale: "es-AR",
-      });
+      const mp = new (window as unknown as MercadoPagoWindow).MercadoPago(
+        "APP_USR-55cf3037-c59b-4609-bd0c-2becbaf6c258",
+        {
+          locale: "es-AR",
+        }
+      );
       mp.checkout({
         preference: {
           id: preferenceId,
