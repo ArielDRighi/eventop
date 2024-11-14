@@ -1,4 +1,4 @@
-import { Controller, Post, Res, Body } from '@nestjs/common';
+import { Controller, Post, Body, Res } from '@nestjs/common';
 import { Response } from 'express';
 import { PaymentService } from './payment.service';
 import {
@@ -26,6 +26,8 @@ export class PaymentController {
     @Res() res: Response,
   ) {
     try {
+      console.log('Event ID:', eventId);
+
       const preferenceId = await this.paymentService.createPreference(eventId);
       res.status(201).json({ preferenceId });
     } catch (error) {

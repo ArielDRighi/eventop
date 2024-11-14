@@ -118,6 +118,8 @@ export class EventService {
 
   async deleteEvent(eventId: number): Promise<{ message: string }> {
     const event = await this.getEventById(eventId);
+    console.log(event);
+
     if (!event) {
       throw new HttpException(
         `Event with ID ${eventId} not found`,

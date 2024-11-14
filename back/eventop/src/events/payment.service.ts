@@ -1,10 +1,16 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Preference } from 'mercadopago';
+import MercadoPagoConfig, { Preference } from 'mercadopago';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Event } from './entities/events.entity';
 import { EventService } from './events.service';
-import { client } from '../config/mercadopago.config';
+import { Controller, Post, Body } from '@nestjs/common'; // Importa los decoradores necesarios
+
+// Agrega credenciales
+const client = new MercadoPagoConfig({
+  accessToken:
+    'APP_USR-7919481759638533-111217-7dc46b6e24d13dd0582f26d3cba133d4-38184233',
+});
 
 @Injectable()
 export class PaymentService {
@@ -16,6 +22,7 @@ export class PaymentService {
 
   async createPreference(eventId: number) {
     const event = await this.eventService.getEventById(eventId);
+
     if (!event) {
       throw new NotFoundException(`Event with ID ${eventId} not found`);
     }
@@ -30,16 +37,9 @@ export class PaymentService {
               title: 'Evento de prueba',
               description: 'Una prueba',
               quantity: 1,
-              unit_price: 200,
-              id: '1',
+              unit_price: 1500,
+              id: event.eventId.toString(),
             },
-            // {
-            //   // title: event.name,
-            //   // description: event.description,
-            //   // quantity: 1,
-            //   // unit_price: event.price,
-            //   // id: event.eventId.toString(),
-            // },
           ],
           payer: {
             email: 'payer_email@example.com', // Puedes obtener el email del comprador si está disponible
@@ -52,11 +52,25 @@ export class PaymentService {
           auto_return: 'approved',
         },
       });
-      console.log(response);
       return response.id;
     } catch (error) {
-      console.error(error);
+      console.log('Error', error);
+      console.log(error);
+
       throw error;
     }
+  }
+}
+
+// Define un controlador para manejar la ruta
+@Controller('payment')
+export class PaymentController {
+  constructor(private readonly paymentService: PaymentService) {}
+
+  @Post('create_preference')
+  async createPreference(@Body('eventId') eventId: number) {
+    return {
+      preferenceId: await this.paymentService.createPreference(eventId),
+    };
   }
 }
