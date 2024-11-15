@@ -63,14 +63,14 @@ export class EventService {
       where: { locationId: location_id },
     });
     if (!location) {
-      throw new Error(`Locación con ID ${location_id} no encontrada`);
+      throw new Error(`Location with ID ${location_id} not found`);
     }
 
     const category = await this.categoryRepository.findOne({
       where: { categoryId: category_id },
     });
     if (!category) {
-      throw new Error(`Categoria con ID ${category_id} no encontrada`);
+      throw new Error(`Category with ID ${category_id} not found`);
     }
 
     const newEvent = this.eventRepository.create({
@@ -100,7 +100,7 @@ export class EventService {
 
     if (!event) {
       throw new HttpException(
-        `Evento con ID ${eventId} no encontrado`,
+        `Event with ID ${eventId} not found`,
         HttpStatus.NOT_FOUND,
       );
     }

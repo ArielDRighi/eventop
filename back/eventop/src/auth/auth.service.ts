@@ -15,14 +15,14 @@ export class AuthService {
   async signIn(credential: SignInAuthDto) {
     const dbUser = await this.userService.findOneByEmail(credential.email);
     if (!dbUser) {
-      throw new BadRequestException('Usuario no encontrado');
+      throw new BadRequestException('User not found');
     }
     const isPasswordValid = await bcrypt.compare(
       credential.password,
       dbUser.password,
     );
     if (!isPasswordValid) {
-      throw new BadRequestException('Contraseña invalida');
+      throw new BadRequestException('Invalid password');
     }
     const payload = {
       username: dbUser.email,
@@ -37,12 +37,12 @@ export class AuthService {
   async signUp(user: CreateUserDto) {
     // Revisamos que las contraseñas coincidan
     if (user.password !== user.confirmPassword) {
-      throw new BadRequestException('Las contraseñas no coinciden');
+      throw new BadRequestException('The passwords do not match');
     }
     // Revisamos si el email ya existe en la DB
     const dbUser = await this.userService.findOneByEmail(user.email);
     if (dbUser) {
-      throw new BadRequestException('El email ya está registrado');
+      throw new BadRequestException('The email is already registered');
     }
     const hashedPassword = await bcrypt.hash(user.password, 10);
     const newUser = {
