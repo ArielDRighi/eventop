@@ -13,7 +13,6 @@ const NavBar = () => {
   useEffect(() => {
     const role = getRoleFromToken();
     if (role) {
-      console.log(role);
       if (role === "guest") {
         setIsAdmin(false);
       } else {

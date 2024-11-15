@@ -4,6 +4,7 @@ import type { NextRequest } from 'next/server';
 export function middleware(req: NextRequest) {
   // Obtén la cookie directamente del request
   const token = req.cookies.get('adminToken');
+  console.log(token)
 
   if (!token && req.nextUrl.pathname.startsWith('/admin/')) {
     // Redirige al login si el token no está presente y la ruta es protegida

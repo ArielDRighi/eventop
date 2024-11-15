@@ -1,8 +1,9 @@
 import { jwtDecode } from "jwt-decode";
+import Cookies from "js-cookie";
 
 export const getRoleFromToken = () => {
     try {
-      const token = localStorage.getItem("adminToken");
+      const token = Cookies.get("adminToken");
       if (token) {
         // Decodifica el token para obtener el payload
         const decodedToken: { role?: string } = jwtDecode(token);
