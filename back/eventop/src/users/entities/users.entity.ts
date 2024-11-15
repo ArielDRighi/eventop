@@ -32,6 +32,9 @@ export class User {
   @Column({ type: 'varchar', length: 10, default: 'ARS' })
   preferredCurrency: string;
 
+  @Column({ type: 'varchar', length: 500, nullable: true })
+  imageUrl?: string;
+
   @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
   createdAt: Date;
 }
