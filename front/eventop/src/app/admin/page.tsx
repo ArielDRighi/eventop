@@ -3,13 +3,14 @@ import { useEffect, useState } from 'react';
 import DashboardAdminSection from "@/components/DashboardAdminSection";
 import Login from "@/views/Login/Login" // Asegúrate de que este componente esté correctamente importado
 import SideBar from '@/components/SideBar';
+import Cookies from 'js-cookie';
 
 const AdminPage = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [checkedAuth, setCheckedAuth] = useState(false); // Para indicar que la autenticación ha sido verificada
 
   useEffect(() => {
-    const admin = localStorage.getItem("adminToken");
+    const admin = Cookies.get("adminToken");
     if (admin) {
       setIsAdmin(true);
     }
