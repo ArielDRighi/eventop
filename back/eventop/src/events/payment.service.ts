@@ -6,6 +6,8 @@ import { Event } from './entities/events.entity';
 import { EventService } from './events.service';
 import { Controller, Post, Body } from '@nestjs/common'; // Importa los decoradores necesarios
 import { config as dotenvConfig } from 'dotenv';
+import { sendPurchaseEmail } from '@app/config/nodeMailer';
+import { CreateUserDto } from '@app/auth/dto/createUser.dto';
 
 // Agrega credenciales
 dotenvConfig();
@@ -21,7 +23,7 @@ export class PaymentService {
     private readonly eventService: EventService,
   ) {}
 
-  async createPreference(eventId: number) {
+  async createPreference(eventId: number, user: CreateUserDto) {
     const event = await this.eventService.getEventById(eventId);
 
     if (!event) {
@@ -57,6 +59,7 @@ export class PaymentService {
           auto_return: 'approved',
         },
       });
+      await sendPurchaseEmail(user.email, user.name, event.name);
       return response.id;
     } catch (error) {
       console.log('Error', error);
@@ -72,9 +75,9 @@ export class PaymentController {
   constructor(private readonly paymentService: PaymentService) {}
 
   @Post('create_preference')
-  async createPreference(@Body('eventId') eventId: number) {
+  async createPreference(@Body('eventId') eventId: number, email: CreateUserDto) {
     return {
-      preferenceId: await this.paymentService.createPreference(eventId),
+      preferenceId: await this.paymentService.createPreference(eventId, email),
     };
   }
 }
