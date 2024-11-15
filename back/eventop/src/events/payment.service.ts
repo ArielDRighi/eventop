@@ -5,11 +5,12 @@ import { Repository } from 'typeorm';
 import { Event } from './entities/events.entity';
 import { EventService } from './events.service';
 import { Controller, Post, Body } from '@nestjs/common'; // Importa los decoradores necesarios
+import { config as dotenvConfig } from 'dotenv';
 
 // Agrega credenciales
+dotenvConfig();
 const client = new MercadoPagoConfig({
-  accessToken:
-    'APP_USR-7919481759638533-111217-7dc46b6e24d13dd0582f26d3cba133d4-38184233',
+  accessToken: process.env.MERCADOPAGO_ACCESS_TOKEN,
 });
 
 @Injectable()
