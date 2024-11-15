@@ -3,22 +3,25 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "PORT=3001 next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^3.5.0",
+    "@heroicons/react": "^2.1.5",
+    "@types/js-cookie": "^3.0.6",
+    "daisyui": "^4.12.14",
     "flowbite": "^2.5.2",
+    "js-cookie": "^3.0.5",
+    "jwt-decode": "^4.0.0",
     "lucide-react": "^0.454.0",
     "next": "^15.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.53.2",
-    "sweetalert2": "^11.14.5",
-    "@heroicons/react": "^2.1.5",
-    "jwt-decode": "^4.0.0"
+    "sweetalert2": "^11.14.5"
   },
   "devDependencies": {
     "@types/node": "^20.17.6",

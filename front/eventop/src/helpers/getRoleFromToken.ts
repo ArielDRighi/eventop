@@ -2,7 +2,7 @@ import { jwtDecode } from "jwt-decode";
 
 export const getRoleFromToken = () => {
     try {
-      const token = localStorage.getItem("access_token");
+      const token = localStorage.getItem("adminToken");
       if (token) {
         // Decodifica el token para obtener el payload
         const decodedToken: { role?: string } = jwtDecode(token);
