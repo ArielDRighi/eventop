@@ -17,7 +17,7 @@ export class SignInAuthDto {
   })
   @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,15}$/, {
     message:
-      'La contraseña debe tener al menos una minúscula, una mayúscula, un numero y un carácter especial',
+      'The password must contain at least one lowercase letter, one uppercase letter, one number, and one special character',
   })
   @IsString()
   password: string;
