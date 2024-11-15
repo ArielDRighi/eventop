@@ -39,8 +39,11 @@ WORKDIR /usr/src/app
 COPY --from=build /usr/src/app/node_modules ./node_modules
 COPY --from=build /usr/src/app/dist ./dist
 
+# Verificar el contenido del directorio dist
+RUN ls -R /usr/src/app/dist
+
 # Exponer el puerto que usará la aplicación en producción
 EXPOSE 3000
 
 # Iniciar la aplicación
-CMD ["node", "dist/main.js"]
+CMD ["node", "dist/src/main"]
