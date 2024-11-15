@@ -1,57 +1,66 @@
+
 services:
-  # Servicio para el contenedor de la API
   eventop:
     container_name: eventop  # Nombre del contenedor
-    image: eventop  # Imagen del contenedor
+    build:
+      context: .  # El directorio donde está el Dockerfile
     ports:
       - "3000:3000"  # Exponer el puerto 3000 del contenedor
     env_file:
-      - .env
+      - .env  # Variables de entorno desde un archivo .env
     environment:
-    - DB_HOST=postgresdb
-    - DB_PORT=5432
-    - DB_USERNAME=postgres
-    - DB_PASSWORD=postgres
-    - DB_NAME=eventop  # Utilizamos variables individuales
+      - DB_HOST=postgresdb  # Nombre del servicio de la base de datos (nombre de contenedor de PostgreSQL)
+      - DB_PORT=5432
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=postgres
+      - DB_NAME=eventop
     depends_on:
-      - postgresdb  # El contenedor de la API depende del contenedor de la DB
+      - postgresdb  # Asegura que el contenedor de la API dependa del contenedor de PostgreSQL
     restart: always  # Reinicia el contenedor si falla
     networks:
       - eventop_network  # Aseguramos que los contenedores estén en la misma red
 
-  # Servicio para el contenedor de PostgreSQL
   postgresdb:
     container_name: postgresdb  # Nombre del contenedor de la base de datos
-    image: postgres  # Imagen de PostgreSQL
+    image: postgres  # Imagen oficial de PostgreSQL
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: eventop
     volumes:
-      - ./postgres-data:/var/lib/postgresql/data  # Monta los datos de la base de datos
-      - ./postgres-data/postgresql.conf:/etc/postgresql/postgresql.conf  # Monta el archivo de configuración correctamente
-    env_file:
-      - .env  # Variables de entorno
+      - postgres-data:/var/lib/postgresql/data  # Persistir los datos de PostgreSQL
     ports:
-      - "5432:5432"  # Exponer el puerto 5432 para la conexión a la DB
+      - "5432:5432"  # Exponer el puerto 5432 para conexiones a la base de datos
     restart: always  # Reinicia el contenedor si falla
     networks:
       - eventop_network  # Aseguramos que los contenedores estén en la misma red
 
-  # Servicio para el contenedor de PgAdmin
   pgadmin:
-    image: dpage/pgadmin4
+    image: dpage/pgadmin4  # Imagen de PgAdmin para administrar la base de datos PostgreSQL
     container_name: pgadmin
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@admin.com
       PGADMIN_DEFAULT_PASSWORD: admin
-      # POSTGRES_HOST_AUTH_METHOD: trust  # Permitir conexiones sin contraseña (solo para desarrollo)
     ports:
-      - '8080:80'
+      - '8080:80'  # Exponer el puerto 8080 para acceder a PgAdmin
     networks: 
       - eventop_network
     depends_on:
-      - postgresdb  # Cambiado a postgresdb para coincidir con el nombre del servicio
+      - postgresdb  # Asegura que PgAdmin dependa de PostgreSQL
 
-volumes:
-  postgres-data:
-
+  # frontend:
+  #   image: eventopfront
+  #   context: ../../front/eventop  # Asegúrate de que esta ruta apunte al directorio de tu frontend
+  #   container_name: frontend
+  #   ports:
+  #     - "80:80"  # Exponer el puerto 80 para acceder al frontend
+  #   networks:
+  #     - eventop_network  # Aseguramos que los contenedores estén en la misma red
+  #   depends_on:
+  #     - eventop  # El frontend depende de que el backend esté funcionando
 networks:
   eventop_network:  # Red personalizada para la comunicación entre contenedores
     driver: bridge
+
+volumes:
+  postgres-data:  # Volumen persistente para los datos de PostgreSQL
