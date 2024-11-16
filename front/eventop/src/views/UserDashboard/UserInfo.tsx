@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 
 export const UserInfo = () => {
     const { error, isLoading, user } = useUser();
+    
     const [userData, setUserData] = useState<UserProfile | null>(null);
      
     useEffect(() => {
@@ -21,7 +22,7 @@ export const UserInfo = () => {
                 </h1>
                 <div className="flex flex-col gap-4 w-1/4 mx-auto">
                     {/* Placeholder for a loading state */}
-                    <img src="" alt="Loading" />
+                    <img src="#" alt="Loading" />
                 </div>
             </section>
         );

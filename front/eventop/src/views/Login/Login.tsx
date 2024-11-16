@@ -3,9 +3,9 @@ import { ILoginErrors, ILoginProps } from "@/interfaces/ILoginProps";
 import { useEffect, useState } from "react";
 import validateLoginForm from "@/helpers/validateLoginForm";
 import Swal from "sweetalert2";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { login } from "@/helpers/auth.helper";
-import Link from "next/link";
+import Cookies from "js-cookie";
 
 
 export const Login = () => {
@@ -75,7 +75,7 @@ export const Login = () => {
       console.log(access_token);
       
       // Almacenar token y datos de usuario en localStorage
-      localStorage.setItem("access_token", JSON.stringify({ access_token }));
+     Cookies.set("adminToken", JSON.stringify({ access_token }));
 
       // Pop-up de éxito
       Swal.fire({
@@ -150,7 +150,7 @@ export const Login = () => {
                   onChange={handleOnChange}
                   onBlur={handleOnBlur}
                   placeholder="Correo electrónico"
-                  className="block w-full border-0 bg-transparent p-0 text-sm placeholder:text-muted-foreground/90 focus:outline-none focus:ring-0 sm:leading-7 text-foreground"
+                  className="block w-full border-0 bg-transparent p-0 text-sm text-white placeholder:text-muted-foreground/90 focus:outline-none focus:ring-0 sm:leading-7 text-foreground"
                 />
                 {touched.email && error.email && (
                   <span className="text-red-500 text-sm block">
@@ -173,7 +173,7 @@ export const Login = () => {
                     onChange={handleOnChange}
                     onBlur={handleOnBlur}
                     placeholder="Contraseña"
-                    className="block w-full border-0 bg-transparent p-0 text-sm placeholder:text-muted-foreground/90 focus:outline-none focus:ring-0 sm:leading-7 text-foreground"
+                    className="block w-full border-0 bg-transparent p-0 text-sm placeholder:text-muted-foreground/90 focus:outline-none focus:ring-0 sm:leading-7 text-foreground text-white"
                   />
                 </div>
                 {touched.password && error.password && (
@@ -194,12 +194,6 @@ export const Login = () => {
               </div>
             </form>
             <div className="flex items-end justify-end mt-4">
-            <a
-                  className="flex  items-center justify-center font-bold rounded-xl   bg-purple-600 px-4 py-3 text-sm text-white duration-200 hover:bg-purple-700"
-                  href={"/api/auth/login"}
-                >
-                 Inciar sesion con Google
-                </a>
             </div>
           </div>
         </div>

@@ -10,7 +10,7 @@ const Search = () => {
 
   return (
     <div>
-      <form className="max-w-lg mx-auto relative">
+      <form className="max-w-lg lg:max-w-3xl mx-auto relative">
         <div className="flex relative">
           <label className="mb-2 text-sm font-medium text-gray-900 sr-only ">
             Your Email
@@ -54,7 +54,7 @@ const Search = () => {
                     type="button"
                     className="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                   >
-                    Mockups
+                    Ubicacion
                   </button>
                 </li>
                 <li>
@@ -62,7 +62,7 @@ const Search = () => {
                     type="button"
                     className="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                   >
-                    Templates
+                    Genero
                   </button>
                 </li>
               </ul>
