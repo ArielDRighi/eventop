@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import NavBar from "@/components/Navbar";
+import NavBar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { UserProvider } from "@auth0/nextjs-auth0/client";
 

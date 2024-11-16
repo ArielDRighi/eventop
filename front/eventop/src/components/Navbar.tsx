@@ -21,7 +21,6 @@ const NavBar = () => {
     }
   }, [isAdmin]);
 
-
   return (
     <nav className="navbar lg:max-w-6xl mx-auto bg-gray-900 text-white">
       <div className="navbar-start">
@@ -30,7 +29,7 @@ const NavBar = () => {
           <span className="text-purple-500">Top</span>
         </Link>
       </div>
-      <div className="navbar-center text-sm hidden lg:flex">
+      <div className="navbar-center text-sm  hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
           <li>
             <Link href={"/"}>
@@ -38,21 +37,17 @@ const NavBar = () => {
             </Link>
           </li>
           <li>
-            <Link href={"/events"}>
-              Encuentra Eventos
-            </Link>
+            <Link href={"/events"}>Encuentra Eventos</Link>
           </li>
           <li>
-            <Link href={"#"}>
-              <button>Precios</button>
-            </Link>
+            <Link href={"/cart"}>Carrito</Link>
           </li>
-          {/* Renderiza la opción de Admin solo si el usuario es admin */}
+          
+          
+          
           {isAdmin && (
             <li>
-              <Link href={"/admin"}>
-                Admin
-              </Link>
+              <Link href={"/admin"}>Admin</Link>
             </li>
           )}
           <li>
