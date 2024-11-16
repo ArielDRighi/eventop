@@ -27,7 +27,7 @@ const NavBar = () => {
           <span className="text-purple-500">Top</span>
         </Link>
       </div>
-      <div className="navbar-center text-sm hidden lg:flex">
+      <div className="navbar-center text-sm  hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
           <li>
             <Link href={"/"}>
@@ -36,11 +36,6 @@ const NavBar = () => {
           </li>
           <li>
             <Link href={"/events"}>Encuentra Eventos</Link>
-          </li>
-          <li>
-            <Link href={"/payments"}>
-              <button>Pagos</button>
-            </Link>
           </li>
           
           

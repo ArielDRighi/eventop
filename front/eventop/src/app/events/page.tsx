@@ -6,6 +6,7 @@ export const page = () => {
   return (
     <>
      <EncontraEventos/>
+     
     </>
   )
 }

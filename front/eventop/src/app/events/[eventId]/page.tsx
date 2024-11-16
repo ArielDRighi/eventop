@@ -9,6 +9,8 @@ import { Calendar, Clock, MapPin, Users } from 'lucide-react';
 import Payments from '@/components/Payments';
 import { useEventById } from '@/helpers/events.helper';
 
+
+
 export default function DetallesEvento () {
   const [showPayment, setShowPayment] = useState(false);
   const params = useParams();
@@ -31,13 +33,15 @@ export default function DetallesEvento () {
   }
 
   return (
+     
+    <div className='bg-gray-900'>
     <div className="min-h-screen  bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto bg-white rounded-xl shadow-md overflow-hidden">
         <div className="md:flex">
           <div className="md:flex-shrink-0">
             <Image
-              className="h-48 w-full object-cover md:w-48"
-              src={event.imageUrl || "/default-image.jpg"}
+              className="h-64 text-black font-semibold w-full object-cover md:w-48"
+              src={event.imageUrl || "https://i.pinimg.com/736x/1a/d2/30/1ad230952c410779a8f11b60818aef06.jpg"}
               alt={event.name}
               width={192}
               height={192}
@@ -101,12 +105,16 @@ export default function DetallesEvento () {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="mt-12"
+          className="mt-12 bg-gray-900"
           id="payment"
         >
           <Payments />
         </motion.div>
       )}
     </div>
+   
+
+    </div> 
+
   );
 }

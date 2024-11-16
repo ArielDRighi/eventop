@@ -75,7 +75,25 @@ const eventCards = [
       title: "F1",
       date: "5 de Diciembre",
       imgSrc:
-        "https://i.pinimg.com/474x/0c/4a/59/0c4a59defd0bf0186eba0194ed9e7db2.jpg",
+        "https://i.pinimg.com/236x/1b/48/3a/1b483aaebe6deb85785a7c98c207da86.jpg",
+    },
+    {
+      title: "Boca",
+      date: "5 de Diciembre",
+      imgSrc:
+        "https://i.pinimg.com/236x/b4/1e/f1/b41ef1eea3f2546772f2e5ced5801650.jpg",
+    },
+    {
+      title: "F1",
+      date: "5 de Diciembre",
+      imgSrc:
+        "https://i.pinimg.com/236x/df/1d/5e/df1d5e9e4904f1d98af8b92a4312039c.jpg",
+    },
+    {
+      title: "F1",
+      date: "5 de Diciembre",
+      imgSrc:
+        "https://i.pinimg.com/236x/98/ec/2b/98ec2bb9a7329e80a2faf9a3c52ab41f.jpg",
     },
   ];
 
