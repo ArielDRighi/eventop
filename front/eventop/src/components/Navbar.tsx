@@ -1,16 +1,18 @@
 "use client";
 
 import { getRoleFromToken } from "@/helpers/getRoleFromToken";
+import { useUser } from "@auth0/nextjs-auth0/client";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 const NavBar = () => {
+  const {user} = useUser()
   const [isAdmin, setIsAdmin] = useState<boolean | undefined>(false);
+
 
   useEffect(() => {
     const role = getRoleFromToken();
     if (role) {
-      console.log(role);
       if (role === "guest") {
         setIsAdmin(false);
       } else {
@@ -67,12 +69,9 @@ const NavBar = () => {
         </ul>
       </div>
       <div className="navbar-end">
-        <Link
-          className="btn bg-purple-500 text-white hover:bg-purple-600"
-          href={"/micuenta"}
-        >
+        <a className="btn bg-purple-500 text-white hover:bg-purple-600" href={user ? "/micuenta" : "/api/auth/login"}>
           Mi Cuenta
-        </Link>
+        </a>
       </div>
     </nav>
   );

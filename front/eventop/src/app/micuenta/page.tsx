@@ -1,31 +1,17 @@
-"use client"
-import React, { useState,useEffect } from 'react';
-import { Login } from '@/views/Login/Login';
-import  Register  from '@/views/Register/Register';
-import { ToggleView } from '@/components/ToggleView';
 
-const Page: React.FC = () => {
-  const [activeView, setActiveView] = useState<string>('Login');
+import { UserInfo } from "@/views/UserDashboard/UserInfo";
+import React from "react";
+import Head from "next/head";
 
-  // Verificar el token y redireccionar en un efecto secundario
-  useEffect(() => {
-    const accesToken = localStorage.getItem('access_token');
-    if (accesToken) {
-      window.location.href = "/micuenta/dashboard";
-    }
-  }, []); // Solo se ejecutará una vez en el montaje del componente
-
-  const views: { [key: string]: React.ReactNode } = {
-    Login: <Login />,
-    Register: <Register />,
-  };
-
+const UserDashboard  = () => {
   return (
     <>
-      <ToggleView activeView={activeView} setActiveView={setActiveView} views={views} />
-      {views[activeView]}
+      <Head>
+        <title>Dashboard de Usuario</title>
+        <meta name="description" content="Panel de control de usuario" />
+      </Head>
+      <UserInfo />
     </>
   );
 };
-
-export default Page;
+export default UserDashboard
