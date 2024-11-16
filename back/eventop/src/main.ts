@@ -10,6 +10,8 @@ async function bootstrap() {
 
   app.enableCors();
 
+ 
+  
   const config = new DocumentBuilder()
     .setTitle('Eventop')
     .setDescription('PF Soy Henry Grupo 1')

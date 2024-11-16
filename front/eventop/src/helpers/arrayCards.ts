@@ -36,22 +36,64 @@ const eventCards = [
         "https://i.pinimg.com/564x/6e/6a/be/6e6abe829292aa0d71e240c9fa88a599.jpg",
     },
     {
-      title: "Chelsea",
+      title: "Trueno",
       date: "5 de Diciembre",
       imgSrc:
-        "https://i.pinimg.com/474x/21/5a/d4/215ad4e625cf9c44ca6c2bc91e1c9dc6.jpg",
+        "https://i.pinimg.com/236x/4e/aa/74/4eaa748d57b1f255818a09ae7599d20b.jpg",
     },
     {
-      title: "Liverpool",
+      title: "Boca",
       date: "5 de Diciembre",
       imgSrc:
-        "https://i.pinimg.com/236x/4f/54/e8/4f54e89929c0a605ba660a6f8f2a4a2d.jpg",
+        "https://i.pinimg.com/736x/ce/6b/b7/ce6bb7b6fe0276e2ce3450b101ce5530.jpg",
     },
     {
       title: "F1",
       date: "5 de Diciembre",
       imgSrc:
         "https://i.pinimg.com/474x/0c/4a/59/0c4a59defd0bf0186eba0194ed9e7db2.jpg",
+    },
+    {
+      title: "Cerati Eterno",
+      date: "5 de Diciembre",
+      imgSrc:
+        "https://i.pinimg.com/564x/6e/6a/be/6e6abe829292aa0d71e240c9fa88a599.jpg",
+    },
+    {
+      title: "Trueno",
+      date: "5 de Diciembre",
+      imgSrc:
+        "https://i.pinimg.com/236x/4e/aa/74/4eaa748d57b1f255818a09ae7599d20b.jpg",
+    },
+    {
+      title: "Boca",
+      date: "5 de Diciembre",
+      imgSrc:
+        "https://i.pinimg.com/736x/ce/6b/b7/ce6bb7b6fe0276e2ce3450b101ce5530.jpg",
+    },
+    {
+      title: "F1",
+      date: "5 de Diciembre",
+      imgSrc:
+        "https://i.pinimg.com/236x/1b/48/3a/1b483aaebe6deb85785a7c98c207da86.jpg",
+    },
+    {
+      title: "Boca",
+      date: "5 de Diciembre",
+      imgSrc:
+        "https://i.pinimg.com/236x/b4/1e/f1/b41ef1eea3f2546772f2e5ced5801650.jpg",
+    },
+    {
+      title: "F1",
+      date: "5 de Diciembre",
+      imgSrc:
+        "https://i.pinimg.com/236x/df/1d/5e/df1d5e9e4904f1d98af8b92a4312039c.jpg",
+    },
+    {
+      title: "F1",
+      date: "5 de Diciembre",
+      imgSrc:
+        "https://i.pinimg.com/236x/98/ec/2b/98ec2bb9a7329e80a2faf9a3c52ab41f.jpg",
     },
   ];
 
