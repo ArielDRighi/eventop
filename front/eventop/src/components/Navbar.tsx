@@ -37,6 +37,10 @@ const NavBar = () => {
           <li>
             <Link href={"/events"}>Encuentra Eventos</Link>
           </li>
+          <li>
+            <Link href={"/cart"}>Carrito</Link>
+          </li>
+          
           
           
           {isAdmin && (
