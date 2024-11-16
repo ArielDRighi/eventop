@@ -4,17 +4,23 @@ import Swal from "sweetalert2";
 
 const APIURL = process.env.NEXT_PUBLIC_API_URL;
 
-export const createEvent = async (eventData: IEventsCreate, token: any) => {
+export const createEvent = async (data: IEventsCreate, token: any, image: File | null) => {
   try {
-     const { access_token } = token
-    console.log(access_token)
+    const { access_token } = token;
+    console.log(access_token);
+
+    // Crear un FormData y agregar los datos y la imagen
+    const formData = new FormData();
+    formData.append('data', JSON.stringify(data)); // Agregar los datos como string
+    formData.append('image', image); // Agregar la imagen como archivo
+
     const response = await fetch(`${APIURL}/events/create`, {
       method: "POST",
       headers: {
         'Authorization': `Bearer ${access_token}`,
-        "Content-type": "application/json",
+        // No se debe especificar "Content-Type" con FormData, ya que lo hace automáticamente
       },
-      body: JSON.stringify(eventData),
+      body: formData
     });
     const res = await response.json();
     if (res.status === 201) {

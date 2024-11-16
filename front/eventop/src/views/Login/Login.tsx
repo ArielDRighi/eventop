@@ -3,9 +3,9 @@ import { ILoginErrors, ILoginProps } from "@/interfaces/ILoginProps";
 import { useEffect, useState } from "react";
 import validateLoginForm from "@/helpers/validateLoginForm";
 import Swal from "sweetalert2";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { login } from "@/helpers/auth.helper";
-import {signIn} from 'next-auth/react'
+import Link from "next/link";
 
 
 export const Login = () => {
@@ -194,12 +194,12 @@ export const Login = () => {
               </div>
             </form>
             <div className="flex items-end justify-end mt-4">
-            <button
+            <a
                   className="flex  items-center justify-center font-bold rounded-xl   bg-purple-600 px-4 py-3 text-sm text-white duration-200 hover:bg-purple-700"
-                 onClick={() => signIn()}
+                  href={"/api/auth/login"}
                 >
                  Inciar sesion con Google
-                </button>
+                </a>
             </div>
           </div>
         </div>
